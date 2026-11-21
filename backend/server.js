@@ -68,6 +68,7 @@ app.get("/api/products", async (req, res) => {
 });
 
 app.use("/api/orders", orderRoutes);
+app.use("/api/search", require("./routes/search"));
 const PORT = 5003;
 
 async function startServer() {
