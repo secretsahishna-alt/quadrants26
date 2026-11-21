@@ -55,4 +55,9 @@ async function startOrderConsumer() {
 }
 
 module.exports = { startOrderConsumer };
-startOrderConsumer();
+if (require.main === module) {
+    startOrderConsumer().catch((error) => {
+        console.error("Consumer stopped:", error.message);
+        process.exitCode = 1;
+    });
+}
