@@ -168,17 +168,8 @@ section { margin-bottom: 28px; }
 .g-mrp { font-size: 12px; color: #94a3b8; text-decoration: line-through; }
 .g-actions { margin-top: auto; display: flex; justify-content: flex-end; }
 
-/* ============================================================
-   ⭐ MY ACCOUNT DASHBOARD
-   ============================================================ */
-.account-wrap {
-  max-width: 520px;
-  background: #fff;
-  border-radius: 14px;
-  border: 1px solid #e2e8f0;
-  overflow: hidden;
-  margin-bottom: 24px;
-}
+/* ========== MY ACCOUNT DASHBOARD ========== */
+.account-wrap { max-width: 520px; background: #fff; border-radius: 14px; border: 1px solid #e2e8f0; overflow: hidden; margin-bottom: 24px; }
 .account-header { padding: 22px 24px 18px; border-bottom: 1px solid #f1f5f9; }
 .account-header h2 { font-size: 26px; font-weight: 800; color: #4a5568; margin-bottom: 4px; }
 .account-header .email { font-size: 16px; color: #2c5282; font-weight: 500; word-break: break-all; }
@@ -191,66 +182,34 @@ section { margin-bottom: 28px; }
 .account-menu li.highlight a:hover { background: #ebebeb; }
 .account-menu li.logout a { color: #c53030; font-weight: 600; }
 .account-menu li.logout a:hover { background: #fff5f5; }
-
-/* Sub-pages inside My Account */
 .account-sub { background: #fff; border: 1px solid #e2e8f0; border-radius: 14px; padding: 24px; margin-bottom: 20px; }
 .account-sub h3 { font-size: 22px; font-weight: 800; color: #4a5568; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid #f1f5f9; }
 .empty-state { text-align: center; padding: 40px 20px; color: #a0aec0; }
 .empty-state .icon { font-size: 48px; margin-bottom: 10px; }
 .empty-state p { font-size: 15px; }
 
-/* ========== ⭐ AMAZON-STYLE ORDER CARDS ========== */
-.amz-order {
-  background: #fff;
-  border: 1px solid #d5d9d9;
-  border-radius: 8px;
-  margin-bottom: 16px;
-  overflow: hidden;
-}
+/* ========== AMAZON-STYLE ORDER CARDS ========== */
+.amz-order { background: #fff; border: 1px solid #d5d9d9; border-radius: 8px; margin-bottom: 16px; overflow: hidden; }
 .amz-order-top { padding: 18px 20px 14px; }
 .amz-order-top .status-head { font-size: 22px; font-weight: 800; color: #0f1111; }
 .amz-order-top .status-sub { font-size: 14px; color: #565959; margin-top: 2px; }
 .amz-order-top .status-sub.refunded { color: #0f1111; font-weight: 600; }
 .amz-order-body { display: flex; gap: 16px; padding: 0 20px 16px; align-items: flex-start; }
-.amz-order-img {
-  width: 140px; height: 140px; flex-shrink: 0;
-  background: #f7f7f7; border-radius: 8px; overflow: hidden;
-  display: flex; align-items: center; justify-content: center;
-}
+.amz-order-img { width: 140px; height: 140px; flex-shrink: 0; background: #f7f7f7; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
 .amz-order-img img { width: 100%; height: 100%; object-fit: contain; }
 .amz-order-details { flex: 1; min-width: 0; }
-.amz-order-title {
-  font-size: 17px; color: #007185; font-weight: 400; line-height: 1.4;
-  text-decoration: none; cursor: pointer;
-}
+.amz-order-title { font-size: 17px; color: #007185; font-weight: 400; line-height: 1.4; text-decoration: none; cursor: pointer; }
 .amz-order-title:hover { color: #c7511f; text-decoration: underline; }
 .amz-order-return { font-size: 13px; color: #565959; margin-top: 8px; }
-.amz-buy-again {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: #ffd814; color: #0f1111;
-  padding: 10px 18px; border-radius: 20px;
-  font-size: 14px; font-weight: 600; margin-top: 12px;
-  border: 1px solid #fcd200;
-  box-shadow: 0 2px 5px rgba(213,217,217,.5);
-}
+.amz-buy-again { display: inline-flex; align-items: center; gap: 8px; background: #ffd814; color: #0f1111; padding: 10px 18px; border-radius: 20px; font-size: 14px; font-weight: 600; margin-top: 12px; border: 1px solid #fcd200; box-shadow: 0 2px 5px rgba(213,217,217,.5); }
 .amz-buy-again:hover { background: #f7ca00; }
-.amz-buy-again .icon {
-  width: 22px; height: 22px; border-radius: 50%;
-  border: 2px solid #0f1111; display: inline-flex;
-  align-items: center; justify-content: center; font-size: 12px;
-}
-
-.amz-order-bar {
-  background: #f0f2f2; padding: 14px 20px;
-  display: flex; gap: 40px; flex-wrap: wrap;
-  border-top: 1px solid #e7e7e7; border-bottom: 1px solid #e7e7e7;
-}
+.amz-buy-again .icon { width: 22px; height: 22px; border-radius: 50%; border: 2px solid #0f1111; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; }
+.amz-order-bar { background: #f0f2f2; padding: 14px 20px; display: flex; gap: 40px; flex-wrap: wrap; border-top: 1px solid #e7e7e7; border-bottom: 1px solid #e7e7e7; }
 .amz-bar-col .label { font-size: 12px; color: #565959; font-weight: 600; letter-spacing: .5px; }
 .amz-bar-col .value { font-size: 15px; color: #0f1111; margin-top: 2px; }
 .amz-bar-col .value a { color: #007185; text-decoration: none; font-weight: 500; }
 .amz-bar-col .value a:hover { color: #c7511f; text-decoration: underline; }
 .amz-bar-col .value .arrow { font-size: 10px; margin-left: 4px; }
-
 .amz-refund-info { padding: 16px 20px; }
 .amz-refund-info .refund-head { font-size: 22px; font-weight: 800; color: #0f1111; }
 .amz-refund-info .refund-sub { font-size: 15px; color: #0f1111; margin-top: 4px; }
@@ -259,31 +218,21 @@ section { margin-bottom: 28px; }
 .amz-refund-info .refund-link .arrow { font-size: 10px; }
 .amz-refund-details { display: none; margin-top: 10px; padding: 12px; background: #f7f7f7; border-radius: 8px; font-size: 14px; color: #565959; line-height: 1.5; }
 .amz-refund-info.open .refund-details { display: block; }
-
-/* Address cards */
 .addr-card { border: 1px solid #e2e8f0; border-radius: 12px; padding: 14px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: flex-start; }
 .addr-card .tag { font-size: 11px; font-weight: 700; background: #eef4fb; color: #2c5282; padding: 2px 8px; border-radius: 12px; margin-bottom: 6px; display: inline-block; }
 .addr-card .text { font-size: 14px; color: #4a5568; line-height: 1.5; }
 .addr-card .text strong { display: block; font-size: 15px; color: #1e293b; margin-bottom: 2px; }
 .addr-card button { background: #f1f5f9; padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 600; color: #475569; }
-
-/* Prescription cards */
 .rx-card { border: 1px solid #e2e8f0; border-radius: 12px; padding: 14px; margin-bottom: 10px; display: flex; gap: 12px; align-items: center; }
 .rx-thumb { width: 56px; height: 56px; border-radius: 10px; background: #fee2e2; display: flex; align-items: center; justify-content: center; font-size: 28px; }
-
-/* Gift card */
 .gift-card { background: linear-gradient(135deg,#15803d,#0ea5e9); color: #fff; border-radius: 14px; padding: 20px; margin-bottom: 12px; }
 .gift-card .bal { font-size: 28px; font-weight: 800; }
 .gift-card .code { font-family: monospace; font-size: 14px; opacity: .9; margin-top: 4px; letter-spacing: 2px; }
-
-/* FAQ */
 .faq-item { border: 1px solid #e2e8f0; border-radius: 10px; margin-bottom: 10px; overflow: hidden; }
 .faq-q { padding: 14px 16px; font-weight: 700; cursor: pointer; display: flex; justify-content: space-between; background: #f8fafc; }
 .faq-q:hover { background: #f1f5f9; }
 .faq-a { padding: 12px 16px; font-size: 14px; color: #4a5568; line-height: 1.5; display: none; }
 .faq-item.open .faq-a { display: block; }
-
-/* Privacy form */
 .privacy-row { display: flex; justify-content: space-between; align-items: center; padding: 14px 0; border-bottom: 1px solid #f1f5f9; }
 .privacy-row:last-child { border-bottom: none; }
 .privacy-row label { font-weight: 600; color: #4a5568; }
@@ -293,6 +242,7 @@ section { margin-bottom: 28px; }
 .switch .slider::before { content: ""; position: absolute; height: 18px; width: 18px; left: 3px; bottom: 3px; background: #fff; border-radius: 50%; transition: .2s; }
 .switch input:checked + .slider { background: #15803d; }
 .switch input:checked + .slider::before { transform: translateX(20px); }
+
 /* ========== CHECKOUT ========== */
 .checkout-wrap { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 20px; align-items: start; }
 .checkout-left, .checkout-right { background: #fff; border: 1px solid #e2e8f0; border-radius: 16px; overflow: hidden; }
@@ -335,30 +285,20 @@ section { margin-bottom: 28px; }
 .proceed-btn:hover { background: #166534; }
 .ck-address-box { margin: 0 22px 16px; padding: 12px 14px; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; font-size: 13px; color: #166534; display: flex; align-items: center; gap: 8px; }
 .ck-address-box .pin { font-weight: 700; }
-/* ============================================================
-   ⭐ PROCEED / DELIVERY MODE SELECTION
-   ============================================================ */
+
+/* ========== PROCEED / DELIVERY MODE SELECTION ========== */
 .proceed-wrap { max-width: 720px; margin: 0 auto; }
 .proceed-heading { font-size: 26px; font-weight: 800; color: #1e293b; margin-bottom: 6px; }
 .proceed-sub { font-size: 15px; color: #64748b; margin-bottom: 22px; }
 .mode-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 24px; }
-.mode-card {
-  background: #fff; border: 2px solid #e2e8f0; border-radius: 16px;
-  padding: 24px; cursor: pointer; transition: all .2s;
-  display: flex; flex-direction: column; gap: 10px;
-}
+.mode-card { background: #fff; border: 2px solid #e2e8f0; border-radius: 16px; padding: 24px; cursor: pointer; transition: all .2s; display: flex; flex-direction: column; gap: 10px; }
 .mode-card:hover { border-color: #15803d; transform: translateY(-3px); box-shadow: 0 6px 18px rgba(21,128,61,.12); }
 .mode-card.selected { border-color: #15803d; background: #f0fdf4; }
 .mode-icon { font-size: 44px; }
 .mode-title { font-size: 18px; font-weight: 800; color: #1e293b; }
 .mode-desc { font-size: 13px; color: #64748b; line-height: 1.4; }
 .mode-eta { font-size: 13px; font-weight: 700; color: #15803d; background: #dcfce7; padding: 4px 10px; border-radius: 20px; display: inline-block; align-self: flex-start; margin-top: 4px; }
-
-/* Summary box on proceed page */
-.proceed-summary {
-  background: #fff; border: 1px solid #e2e8f0; border-radius: 16px;
-  padding: 18px 22px; margin-bottom: 18px;
-}
+.proceed-summary { background: #fff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 18px 22px; margin-bottom: 18px; }
 .proceed-summary h4 { font-size: 16px; font-weight: 800; margin-bottom: 12px; color: #1e293b; }
 .ps-item { display: flex; gap: 10px; padding: 8px 0; border-bottom: 1px solid #f1f5f9; align-items: center; font-size: 14px; }
 .ps-item:last-child { border-bottom: none; }
@@ -368,28 +308,19 @@ section { margin-bottom: 28px; }
 .ps-item .ps-meta { font-size: 12px; color: #64748b; }
 .ps-item .ps-qty { margin-left: auto; font-weight: 700; color: #15803d; white-space: nowrap; }
 
-/* ============================================================
-   ⭐ DELIVERY ON GATE SCREEN
-   ============================================================ */
+/* ========== DELIVERY ON GATE SCREEN ========== */
 .delivery-screen { max-width: 720px; margin: 0 auto; }
-.delivery-hero {
-  background: linear-gradient(135deg, #15803d 0%, #0ea5e9 100%);
-  color: #fff; border-radius: 18px; padding: 28px;
-  text-align: center; margin-bottom: 20px;
-}
+.delivery-hero { background: linear-gradient(135deg, #15803d 0%, #0ea5e9 100%); color: #fff; border-radius: 18px; padding: 28px; text-align: center; margin-bottom: 20px; }
 .delivery-hero .big-icon { font-size: 64px; margin-bottom: 10px; }
 .delivery-hero h2 { font-size: 24px; font-weight: 800; margin-bottom: 6px; }
 .delivery-hero .eta { font-size: 18px; font-weight: 600; opacity: .95; }
 .delivery-hero .eta strong { font-size: 26px; font-weight: 800; }
-
 .delivery-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 20px 22px; margin-bottom: 16px; }
 .delivery-card h4 { font-size: 17px; font-weight: 800; color: #1e293b; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
 .delivery-row { display: flex; justify-content: space-between; padding: 8px 0; font-size: 14px; color: #475569; border-bottom: 1px solid #f1f5f9; }
 .delivery-row:last-child { border-bottom: none; }
 .delivery-row .dr-label { display: flex; align-items: center; gap: 8px; }
 .delivery-row .dr-value { font-weight: 600; color: #1e293b; }
-
-/* Tracking timeline */
 .timeline { display: flex; flex-direction: column; gap: 0; margin-top: 8px; }
 .tl-step { display: flex; gap: 14px; position: relative; padding-bottom: 18px; }
 .tl-step:last-child { padding-bottom: 0; }
@@ -404,24 +335,14 @@ section { margin-bottom: 28px; }
 .tl-content .tl-title { font-weight: 700; color: #1e293b; font-size: 14px; }
 .tl-content .tl-sub { font-size: 12px; color: #64748b; margin-top: 2px; }
 
-/* ============================================================
-   ⭐ PICK UP POINT SCREEN
-   ============================================================ */
-.pickup-hero {
-  background: linear-gradient(135deg, #7c3aed 0%, #2563eb 100%);
-  color: #fff; border-radius: 18px; padding: 28px;
-  margin-bottom: 20px;
-}
+/* ========== PICK UP POINT SCREEN ========== */
+.pickup-hero { background: linear-gradient(135deg, #7c3aed 0%, #2563eb 100%); color: #fff; border-radius: 18px; padding: 28px; margin-bottom: 20px; }
 .pickup-hero h2 { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
 .pickup-hero .sub { font-size: 14px; opacity: .9; margin-bottom: 14px; }
-.pickup-store-box {
-  background: rgba(255,255,255,.15); border-radius: 12px;
-  padding: 14px; backdrop-filter: blur(10px);
-}
+.pickup-store-box { background: rgba(255,255,255,.15); border-radius: 12px; padding: 14px; backdrop-filter: blur(10px); }
 .pickup-store-box .ps-name { font-size: 17px; font-weight: 800; }
 .pickup-store-box .ps-addr { font-size: 13px; opacity: .9; margin-top: 2px; }
 .pickup-store-box .ps-time { font-size: 13px; margin-top: 8px; font-weight: 700; background: rgba(255,255,255,.25); padding: 4px 10px; border-radius: 20px; display: inline-block; }
-
 .pickup-items-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 20px 22px; margin-bottom: 16px; }
 .pickup-items-card h4 { font-size: 17px; font-weight: 800; color: #1e293b; margin-bottom: 14px; }
 .pi-item { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid #f1f5f9; align-items: center; }
@@ -432,11 +353,8 @@ section { margin-bottom: 28px; }
 .pi-name { font-weight: 700; font-size: 14px; color: #1e293b; }
 .pi-shop { font-size: 12px; color: #64748b; margin-top: 2px; }
 .pi-qty { font-weight: 800; color: #15803d; font-size: 15px; }
-
 .pickup-instructions { background: #fffbeb; border: 1px solid #fde68a; border-radius: 12px; padding: 14px 18px; font-size: 14px; color: #92400e; display: flex; gap: 10px; align-items: flex-start; }
 .pickup-instructions .pi-icon { font-size: 22px; }
-
-
 
 /* ========== RESPONSIVE ========== */
 @media (max-width: 1100px) {
@@ -471,7 +389,6 @@ section { margin-bottom: 28px; }
   </aside>
 
   <main class="main">
-
     <!-- HOME VIEW -->
     <div id="homeView">
       <section class="banners">
@@ -542,11 +459,9 @@ section { margin-bottom: 28px; }
       <div id="shopSections"></div>
     </div>
 
-    <!-- ⭐ MY ACCOUNT VIEW -->
+    <!-- MY ACCOUNT VIEW -->
     <div id="accountView" class="hidden">
       <button class="back-btn" onclick="showHome(event)">← Back to Home</button>
-
-      <!-- Main menu -->
       <div id="accountMain" class="account-wrap">
         <div class="account-header">
           <h2>My Account</h2>
@@ -562,10 +477,9 @@ section { margin-bottom: 28px; }
           <li class="logout"><a onclick="handleLogout()">Log Out</a></li>
         </ul>
       </div>
-
-      <!-- Sub-pages -->
       <div id="accountSub" class="hidden"></div>
     </div>
+
     <!-- CHECKOUT -->
     <div id="checkoutView" class="hidden">
       <button class="back-btn" onclick="closeCheckout()">← Back to Cart</button>
@@ -592,14 +506,15 @@ section { margin-bottom: 28px; }
       </div>
     </div>
 
-  <!-- ⭐ PROCEED / DELIVERY MODE SELECTION -->
+    <!-- PROCEED / PAYMENT & DELIVERY MODE SELECTION -->
     <div id="proceedView" class="hidden">
       <button class="back-btn" onclick="closeProceed()">← Back to Checkout</button>
       <div class="proceed-wrap">
-        <h2 class="proceed-heading">How would you like to receive your order?</h2>
-        <p class="proceed-sub">Choose your preferred delivery method</p>
+        <h2 class="proceed-heading">Complete Your Order</h2>
+        <p class="proceed-sub">Select fulfillment, payment, and review your order.</p>
 
-        <div class="mode-cards">
+        <!-- 1. Fulfillment -->
+        <div class="mode-cards" style="margin-bottom: 24px;">
           <div class="mode-card" id="modePickup" onclick="selectMode('pickup')">
             <div class="mode-icon">🏪</div>
             <div class="mode-title">Pick up point</div>
@@ -614,26 +529,77 @@ section { margin-bottom: 28px; }
           </div>
         </div>
 
-        <!-- Order summary -->
+        <!-- 2. Order summary -->
         <div class="proceed-summary">
           <h4>📦 Order Summary</h4>
           <div id="proceedSummaryItems"></div>
         </div>
 
+        <!-- 3. Payment Methods (NEW) -->
+        <div class="proceed-summary">
+          <h4>💳 Payment Method</h4>
+          <div class="payment-methods" style="display: flex; flex-direction: column; gap: 10px;">
+            <label class="payment-option" style="display: flex; align-items: center; gap: 12px; padding: 14px; border: 1px solid #e2e8f0; border-radius: 10px; cursor: pointer; transition: .2s;">
+              <input type="radio" name="payment" checked style="accent-color: #15803d; width: 18px; height: 18px;">
+              <span style="font-size: 20px; width: 30px; text-align: center;">📱</span>
+              <div style="flex: 1;">
+                <div style="font-weight: 600; font-size: 14px;">UPI (GPay, PhonePe, Paytm)</div>
+                <div style="font-size: 12px; color: #64748b;">Pay instantly using your UPI ID</div>
+              </div>
+            </label>
+            <label class="payment-option" style="display: flex; align-items: center; gap: 12px; padding: 14px; border: 1px solid #e2e8f0; border-radius: 10px; cursor: pointer; transition: .2s;">
+              <input type="radio" name="payment" style="accent-color: #15803d; width: 18px; height: 18px;">
+              <span style="font-size: 20px; width: 30px; text-align: center;">💳</span>
+              <div style="flex: 1;">
+                <div style="font-weight: 600; font-size: 14px;">Credit / Debit Card</div>
+                <div style="font-size: 12px; color: #64748b;">Visa, Mastercard, RuPay, Amex</div>
+              </div>
+            </label>
+            <label class="payment-option" style="display: flex; align-items: center; gap: 12px; padding: 14px; border: 1px solid #e2e8f0; border-radius: 10px; cursor: pointer; transition: .2s;">
+              <input type="radio" name="payment" style="accent-color: #15803d; width: 18px; height: 18px;">
+              <span style="font-size: 20px; width: 30px; text-align: center;">🏦</span>
+              <div style="flex: 1;">
+                <div style="font-weight: 600; font-size: 14px;">NetBanking</div>
+                <div style="font-size: 12px; color: #64748b;">HDFC, SBI, ICICI, Axis & more</div>
+              </div>
+            </label>
+            <label class="payment-option" style="display: flex; align-items: center; gap: 12px; padding: 14px; border: 1px solid #e2e8f0; border-radius: 10px; cursor: pointer; transition: .2s;">
+              <input type="radio" name="payment" style="accent-color: #15803d; width: 18px; height: 18px;">
+              <span style="font-size: 20px; width: 30px; text-align: center;">👛</span>
+              <div style="flex: 1;">
+                <div style="font-weight: 600; font-size: 14px;">Wallets</div>
+                <div style="font-size: 12px; color: #64748b;">Amazon Pay, Freecharge, Mobikwik</div>
+              </div>
+            </label>
+            <label class="payment-option" style="display: flex; align-items: center; gap: 12px; padding: 14px; border: 1px solid #e2e8f0; border-radius: 10px; cursor: pointer; transition: .2s;">
+              <input type="radio" name="payment" style="accent-color: #15803d; width: 18px; height: 18px;">
+              <span style="font-size: 20px; width: 30px; text-align: center;">💵</span>
+              <div style="flex: 1;">
+                <div style="font-weight: 600; font-size: 14px;">Cash on Delivery (COD)</div>
+                <div style="font-size: 12px; color: #64748b;">Pay cash when you receive your order</div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- 4. Bill summary -->
         <div class="proceed-summary">
           <h4>💰 Payment Summary</h4>
           <div id="proceedSummaryBill"></div>
         </div>
+
+        <!-- 5. Place Order Button -->
+        <button class="proceed-btn" style="width:100%; padding:16px; background:#15803d; color:#fff; font-size:16px; font-weight:700; border-radius:12px; margin-top:16px; border:none; cursor:pointer; transition: background .15s;" onmouseover="this.style.background='#166534'" onmouseout="this.style.background='#15803d'" onclick="confirmOrder(this)">Place Order & Pay</button>
       </div>
     </div>
 
-    <!-- ⭐ DELIVERY ON GATE SCREEN -->
+    <!-- DELIVERY ON GATE SCREEN -->
     <div id="deliveryView" class="hidden">
       <button class="back-btn" onclick="closeDelivery()">← Back</button>
       <div class="delivery-screen" id="deliveryScreen"></div>
     </div>
 
-    <!-- ⭐ PICK UP POINT SCREEN -->
+    <!-- PICK UP POINT SCREEN -->
     <div id="pickupView" class="hidden">
       <button class="back-btn" onclick="closePickup()">← Back</button>
       <div class="pickup-hero" id="pickupHero"></div>
@@ -660,7 +626,11 @@ section { margin-bottom: 28px; }
 
 <script>
 /* ========== IMAGE HELPERS ========== */
-function photo(name){ return "images/" + name + ".jpg"; }
+function photo(name){
+  const label=name.replace(/[-_]+/g," ").replace(/\b\w/g,c=>c.toUpperCase());
+  const svg=`<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><rect width='300' height='300' fill='#e9f5ec'/><text x='150' y='158' font-family='Arial' font-size='18' font-weight='700' text-anchor='middle' fill='#15803d'>${label.replace(/&/g,"&amp;")}</text></svg>`;
+  return "data:image/svg+xml;utf8,"+encodeURIComponent(svg);
+}
 function tile(name){
   const hue=[...name].reduce((s,c)=>s+c.charCodeAt(0),0)%360;
   const label=name.slice(0,22).replace(/&/g,"&amp;");
@@ -678,14 +648,17 @@ const stores = [
   { id:5, name:"Bengaluru Superstore", time:"15 mins", rating:4.1, km:3.4, img:photo("store-superstore") },
   { id:6, name:"QuickBite Snacks", time:"9 mins", rating:4.0, km:1.1, img:photo("store-quickbite") }
 ];
+
+// UPGRADED: Categories now use real Unsplash images
 const categories = [
-  { id:"fruits", name:"Fruits & Vegetables", img:photo("cat-fruits") },
-  { id:"dairy", name:"Dairy Products", img:photo("cat-dairy") },
-  { id:"drinks", name:"Cold Drinks & Juices", img:photo("cat-drinks") },
-  { id:"snacks", name:"Snacks & Munchies", img:photo("cat-snacks") },
-  { id:"bakery", name:"Bakery & Eggs", img:photo("cat-bakery") },
-  { id:"care", name:"Personal Care", img:photo("cat-care") }
+  { id:"fruits", name:"Fruits & Vegetables", img:"https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=300&h=200&fit=crop" },
+  { id:"dairy", name:"Dairy Products", img:"https://images.unsplash.com/photo-1628088062854-d1870b4553da?w=300&h=200&fit=crop" },
+  { id:"drinks", name:"Cold Drinks & Juices", img:"https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=300&h=200&fit=crop" },
+  { id:"snacks", name:"Snacks & Munchies", img:"https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=300&h=200&fit=crop" },
+  { id:"bakery", name:"Bakery & Eggs", img:"https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=300&h=200&fit=crop" },
+  { id:"care", name:"Personal Care", img:"https://images.unsplash.com/photo-1556228720-195a672e8a03?w=300&h=200&fit=crop" }
 ];
+
 const catNames = { fruits:"Fruits & Veg", dairy:"Dairy", drinks:"Drinks", snacks:"Snacks", bakery:"Bakery & Eggs", care:"Personal Care", grocery:"Grocery" };
 const dealChips = [
   { k:"foryou", label:"For you" }, { k:"trending", label:"Trending" },
@@ -767,53 +740,12 @@ let shopFilter = null;
 let priceBounds = [0,1000];
 let selectedDeliveryMode = null;
 
-// ⭐ Updated: Logged-in user email
-const loggedInUser = {
-  email: "rishika.agrawal@gmail.com",
-  name: "rishika agrawal"
-};
+const loggedInUser = { email: "rishika.agrawal@gmail.com", name: "rishika agrawal" };
 
-// ⭐ Updated: Amazon-style order data
 const myOrders = [
-  {
-    id: "ORD-7697",
-    status: "Delivered",
-    statusDate: "30 October",
-    statusSub: "Package was handed to resident",
-    placedDate: "12 October 2026",
-    total: 554.78,
-    shipTo: "rishika agrawal",
-    returnWindow: "9 November 2026",
-    items: [
-      { name: "Swiss Beauty Harry Potter Discovery Box | Transfiguration Colour-Changing Foundation | Classy Multichrome Eyeliner | Spellbinding Tinted Lip Balm Set", img: photo("harry-potter-box") }
-    ]
-  },
-  {
-    id: "ORD-7682",
-    status: "Refunded",
-    statusSub: "Your return is in transit. Your refund has been issued.",
-    placedDate: "05 October 2026",
-    total: 1299.00,
-    shipTo: "rishika agrawal",
-    refundQuestion: "When will I get my refund?",
-    refundAnswer: "Refunds are typically processed within 5–7 business days after the returned item is received at our warehouse. The amount will be credited back to your original payment method. You can track the refund status in this section.",
-    items: [
-      { name: "20 Stage Shower Head and Tap Filter for Bathroom Hard Water Softner SF-20 Pro | Water Softener | Reduces hair fall, Protects Skin | Removes Chlorine, Heavy Metals", img: photo("shower-filter") }
-    ]
-  },
-  {
-    id: "ORD-7690",
-    status: "Delivered",
-    statusDate: "15 November",
-    statusSub: "Package was handed to resident",
-    placedDate: "10 November 2026",
-    total: 89.00,
-    shipTo: "rishika agrawal",
-    returnWindow: "25 November 2026",
-    items: [
-      { name: "Mint Toothpaste | Fresh Breath Formula | 150g Tube", img: photo("toothpaste") }
-    ]
-  }
+  { id: "ORD-7697", status: "Delivered", statusDate: "30 October", statusSub: "Package was handed to resident", placedDate: "12 October 2026", total: 554.78, shipTo: "rishika agrawal", returnWindow: "9 November 2026", items: [{ name: "Swiss Beauty Harry Potter Discovery Box", img: photo("harry-potter-box") }] },
+  { id: "ORD-7682", status: "Refunded", statusSub: "Your return is in transit. Your refund has been issued.", placedDate: "05 October 2026", total: 1299.00, shipTo: "rishika agrawal", refundQuestion: "When will I get my refund?", refundAnswer: "Refunds are typically processed within 5–7 business days after the returned item is received at our warehouse.", items: [{ name: "20 Stage Shower Head and Tap Filter", img: photo("shower-filter") }] },
+  { id: "ORD-7690", status: "Delivered", statusDate: "15 November", statusSub: "Package was handed to resident", placedDate: "10 November 2026", total: 89.00, shipTo: "rishika agrawal", returnWindow: "25 November 2026", items: [{ name: "Mint Toothpaste | Fresh Breath Formula | 150g Tube", img: photo("toothpaste") }] }
 ];
 
 const myAddresses = [
@@ -844,7 +776,6 @@ function discOf(p){ return Math.round((p.mrp-p.price)/p.mrp*100); }
 function stars(r){ const f=Math.round(r); return "★★★★★".slice(0,f)+"☆☆☆☆☆".slice(0,5-f); }
 function gstOf(amount){ return amount*0.05; }
 function ckStepper(id,qty){ return `<div class="ck-stepper"><button onclick="changeQty(${id},-1)" aria-label="Decrease quantity">−</button><span>${qty}</span><button onclick="changeQty(${id},1)" aria-label="Increase quantity">+</button></div>`; }
-
 function stepper(id,qty){ return `<div class="qty-ctrl"><button onclick="changeQty(${id},-1)">−</button><span>${qty}</span><button onclick="changeQty(${id},1)">+</button></div>`; }
 function qtyControl(id){ const q=getQty(id); return q===0?`<button class="add-outline" onclick="changeQty(${id},1)">ADD</button>`:stepper(id,q); }
 function overlayControl(id){ const q=getQty(id); return q===0?`<button class="plus-btn" onclick="changeQty(${id},1)">+</button>`:stepper(id,q); }
@@ -935,7 +866,8 @@ function closeModal(){ openStoreId=null; document.getElementById("modal").classL
 /* ========== CART ========== */
 function changeQty(id,delta){
   const item=cart.find(c=>c.id===id);
-  if(item){ item.qty+=delta; } else { cart.push({id,qty:1}); }
+  if(item){ item.qty+=delta; }
+  else if(delta>0){ cart.push({id,qty:1}); }
   cart=cart.filter(c=>c.qty>0);
   refreshAll();
 }
@@ -957,7 +889,7 @@ function renderCart(){
   }
   document.getElementById("cartTotal").textContent="₹"+total;
   document.getElementById("navCartCount").textContent=count;
-  }
+}
 
 /* ========== CHECKOUT ========== */
 function showCheckout(){ if(cart.length===0){ alert("Your cart is empty!"); return; } hideAllViews(); document.getElementById("checkoutView").classList.remove("hidden"); renderCheckout(); window.scrollTo({top:0,behavior:"smooth"}); }
@@ -986,9 +918,8 @@ function renderCheckout(){
     <div class="bill-row grand"><div class="label">Grand total<span class="info" title="Final amount">i</span></div><div class="value">₹${grandTotal}</div></div>`;
   document.getElementById("ckSavings").textContent="₹"+savings;
 }
-/* ============================================================
-   ⭐ PROCEED / DELIVERY MODE SELECTION
-   ============================================================ */
+
+/* ========== PROCEED / PAYMENT & DELIVERY MODE SELECTION ========== */
 function showProceed(){
   if(cart.length===0){ alert("Cart is empty!"); return; }
   hideAllViews();
@@ -1002,7 +933,6 @@ function showProceed(){
 function closeProceed(){ document.getElementById("proceedView").classList.add("hidden"); document.getElementById("checkoutView").classList.remove("hidden"); }
 
 function renderProceedSummary(){
-  // Items summary grouped by store
   const byStore = {};
   cart.forEach(c=>{ const p=getProduct(c.id); if(!byStore[p.storeId]) byStore[p.storeId]=[]; byStore[p.storeId].push({...p,qty:c.qty}); });
   let itemsHtml = "";
@@ -1022,7 +952,6 @@ function renderProceedSummary(){
   });
   document.getElementById("proceedSummaryItems").innerHTML = itemsHtml;
 
-  // Bill summary
   let totalMrp=0, totalSelling=0;
   cart.forEach(c=>{ const p=getProduct(c.id); totalMrp+=p.mrp*c.qty; totalSelling+=p.price*c.qty; });
   const savings=totalMrp-totalSelling, deliveryCharge=totalSelling>199?0:35, handlingCharge=8, smallCartCharge=totalSelling<150?25:0, gstTotal=gstOf(totalSelling), grandTotal=Math.round(totalSelling+deliveryCharge+handlingCharge+smallCartCharge+gstTotal);
@@ -1034,15 +963,33 @@ function renderProceedSummary(){
     <div class="delivery-row" style="border-top:1px dashed #e2e8f0;margin-top:6px;padding-top:10px;font-weight:800;font-size:16px"><div class="dr-label">Grand total</div><div class="dr-value" style="font-size:18px">₹${grandTotal}</div></div>`;
 }
 
+// UPDATED: selectMode now just highlights the choice, it doesn't auto-redirect
 function selectMode(mode){
   selectedDeliveryMode = mode;
   document.getElementById("modePickup").classList.toggle("selected", mode==="pickup");
   document.getElementById("modeDelivery").classList.toggle("selected", mode==="delivery");
-  // Short delay then open the chosen screen
-  setTimeout(()=>{
-    if(mode==="delivery") openDeliveryScreen();
-    else openPickupScreen();
-  }, 180);
+}
+
+// NEW: confirmOrder handles the payment simulation and THEN redirects
+function confirmOrder(button) {
+  if (!selectedDeliveryMode) {
+    alert("Please select a fulfillment method (Pick up point or Delivery on gate).");
+    return;
+  }
+  const btn = button;
+  const originalText = btn.textContent;
+  btn.textContent = "Processing Payment...";
+  btn.disabled = true;
+
+  setTimeout(() => {
+    btn.textContent = originalText;
+    btn.disabled = false;
+    if (selectedDeliveryMode === "delivery") {
+      openDeliveryScreen();
+    } else {
+      openPickupScreen();
+    }
+  }, 1500);
 }
 
 function openDeliveryScreen(){
@@ -1099,7 +1046,6 @@ function openPickupScreen(){
   window.scrollTo({top:0,behavior:"smooth"});
 }
 function closePickup(){ document.getElementById("pickupView").classList.add("hidden"); document.getElementById("proceedView").classList.remove("hidden"); }
-
 
 /* ========== SHOP DETAIL PAGE ========== */
 function openShopDetail(id){
@@ -1289,9 +1235,7 @@ function addNewStore(){
   alert("Store added successfully!");
 }
 
-/* ============================================================
-   ⭐ MY ACCOUNT DASHBOARD
-   ============================================================ */
+/* ========== MY ACCOUNT DASHBOARD ========== */
 function showAccount(e){
   if(e) e.preventDefault();
   hideAllViews();
@@ -1299,7 +1243,6 @@ function showAccount(e){
   document.getElementById("accountMain").classList.remove("hidden");
   document.getElementById("accountSub").classList.add("hidden");
   document.getElementById("accountSub").innerHTML="";
-  // ⭐ Set logged-in email
   document.getElementById("userEmail").textContent = loggedInUser.email;
   setActiveLink("accountLink");
 }
@@ -1315,90 +1258,53 @@ function showAccountSub(section){
       html += `<div class="empty-state" style="background:#fff;border:1px solid #d5d9d9;border-radius:0 0 14px 14px;padding:40px"><div class="icon">📦</div><p>No orders yet. Start shopping!</p></div>`;
     } else {
       myOrders.forEach(o=>{
-        // Top status section
         html += `<div class="amz-order">`;
         if(o.status==="Delivered"){
-          html += `<div class="amz-order-top">
-            <div class="status-head">Delivered ${o.statusDate}</div>
-            <div class="status-sub">${o.statusSub}</div>
-          </div>`;
+          html += `<div class="amz-order-top"><div class="status-head">Delivered ${o.statusDate}</div><div class="status-sub">${o.statusSub}</div></div>`;
         } else if(o.status==="Refunded"){
-          html += `<div class="amz-order-top">
-            <div class="status-head">Refunded</div>
-            <div class="status-sub refunded">${o.statusSub}</div>
-          </div>`;
+          html += `<div class="amz-order-top"><div class="status-head">Refunded</div><div class="status-sub refunded">${o.statusSub}</div></div>`;
         }
-
-        // Product body
         o.items.forEach(item=>{
           html += `<div class="amz-order-body">
             <div class="amz-order-img">${img(item.img, item.name)}</div>
             <div class="amz-order-details">
               <a class="amz-order-title">${item.name}</a>
               ${o.returnWindow?`<div class="amz-order-return">Return window closed on ${o.returnWindow}</div>`:""}
-              <button class="amz-buy-again" onclick="alert('Added to cart!')">
-                <span class="icon">↻</span> Buy It Again
-              </button>
+              <button class="amz-buy-again" onclick="alert('Added to cart!')"><span class="icon">↻</span> Buy It Again</button>
             </div>
           </div>`;
         });
-
-        // Gray info bar
         html += `<div class="amz-order-bar">
           <div class="amz-bar-col"><div class="label">ORDER PLACED</div><div class="value">${o.placedDate}</div></div>
           <div class="amz-bar-col"><div class="label">TOTAL</div><div class="value">₹${o.total.toFixed(2)}</div></div>
           <div class="amz-bar-col"><div class="label">SHIP TO</div><div class="value"><a href="#">${o.shipTo} <span class="arrow">▾</span></a></div></div>
         </div>`;
-
-        // Refund info (only for refunded orders)
         if(o.status==="Refunded" && o.refundQuestion){
           html += `<div class="amz-refund-info" id="refund-${o.id}">
             <div class="refund-head">Refunded</div>
             <div class="refund-sub">${o.statusSub}</div>
-            <div class="refund-link" onclick="toggleRefund('${o.id}')">
-              ${o.refundQuestion} <span class="arrow">▾</span>
-            </div>
+            <div class="refund-link" onclick="toggleRefund('${o.id}')">${o.refundQuestion} <span class="arrow">▾</span></div>
             <div class="refund-details">${o.refundAnswer}</div>
           </div>`;
         }
-
         html += `</div>`;
       });
     }
     html += `</div>`;
   }
   else if(section==="addresses"){
-    html += `<div class="account-sub"><h3>Saved Addresses</h3>
-      <button class="btn-dark" style="margin-bottom:14px" onclick="alert('Add address form coming soon!')">+ Add New Address</button>`;
+    html += `<div class="account-sub"><h3>Saved Addresses</h3><button class="btn-dark" style="margin-bottom:14px" onclick="alert('Add address form coming soon!')">+ Add New Address</button>`;
     myAddresses.forEach(a=>{
-      html += `<div class="addr-card">
-        <div>
-          <span class="tag">${a.tag}</span>
-          <div class="text"><strong>${a.name}</strong>${a.line1}<br>${a.city}<br>📞 ${a.phone}</div>
-        </div>
-        <div style="display:flex;flex-direction:column;gap:6px">
-          <button onclick="alert('Edit address')">Edit</button>
-          ${!a.default?`<button onclick="alert('Delete address')" style="color:#c53030">Delete</button>`:""}
-        </div>
-      </div>`;
+      html += `<div class="addr-card"><div><span class="tag">${a.tag}</span><div class="text"><strong>${a.name}</strong>${a.line1}<br>${a.city}<br>📞 ${a.phone}</div></div><div style="display:flex;flex-direction:column;gap:6px"><button onclick="alert('Edit address')">Edit</button>${!a.default?`<button onclick="alert('Delete address')" style="color:#c53030">Delete</button>`:""}</div></div>`;
     });
     html += `</div>`;
   }
   else if(section==="prescriptions"){
-    html += `<div class="account-sub"><h3>My Prescriptions</h3>
-      <button class="btn-dark" style="margin-bottom:14px" onclick="alert('Upload prescription form coming soon!')">📤 Upload New Prescription</button>`;
+    html += `<div class="account-sub"><h3>My Prescriptions</h3><button class="btn-dark" style="margin-bottom:14px" onclick="alert('Upload prescription form coming soon!')">📤 Upload New Prescription</button>`;
     if(myPrescriptions.length===0){ html += `<div class="empty-state"><div class="icon">💊</div><p>No prescriptions uploaded yet.</p></div>`; }
     else{
       myPrescriptions.forEach(r=>{
-        html += `<div class="rx-card">
-          <div class="rx-thumb">${r.img}</div>
-          <div class="order-info">
-            <div class="name">${r.id}</div>
-            <div class="meta">${r.doctor} • ${r.date}</div>
-            <div class="meta" style="margin-top:4px">${r.items} medicine(s) prescribed</div>
-          </div>
-          <button class="btn-dark" style="padding:6px 12px;font-size:12px" onclick="alert('Re-order medicines')">Re-order</button>
-        </div>`;
+        html += `<div class="rx-card"><div class="rx-thumb">${r.img}</div><div class="order-info"><div class="name">${r.id}</div><div class="meta">${r.doctor} • ${r.date}</div><div class="meta" style="margin-top:4px">${r.items} medicine(s) prescribed</div></div><button class="btn-dark" style="padding:6px 12px;font-size:12px" onclick="alert('Re-order medicines')">Re-order</button></div>`;
       });
     }
     html += `</div>`;
@@ -1408,12 +1314,7 @@ function showAccountSub(section){
     if(myGiftCards.length===0){ html += `<div class="empty-state"><div class="icon">🎁</div><p>No gift cards yet.</p></div>`; }
     else{
       myGiftCards.forEach(g=>{
-        html += `<div class="gift-card">
-          <div style="font-size:13px;opacity:.9">Available Balance</div>
-          <div class="bal">₹${g.balance}</div>
-          <div class="code">${g.code}</div>
-          <div style="font-size:12px;opacity:.8;margin-top:6px">Expires: ${g.expires}</div>
-        </div>`;
+        html += `<div class="gift-card"><div style="font-size:13px;opacity:.9">Available Balance</div><div class="bal">₹${g.balance}</div><div class="code">${g.code}</div><div style="font-size:12px;opacity:.8;margin-top:6px">Expires: ${g.expires}</div></div>`;
       });
     }
     html += `<button class="btn-dark" style="margin-top:8px" onclick="alert('Redeem gift card feature coming soon!')">🎁 Redeem a Gift Card</button></div>`;
@@ -1421,16 +1322,12 @@ function showAccountSub(section){
   else if(section==="faq"){
     html += `<div class="account-sub"><h3>FAQ's</h3>`;
     faqs.forEach((f,i)=>{
-      html += `<div class="faq-item" id="faq-${i}">
-        <div class="faq-q" onclick="toggleFaq(${i})">${f.q} <span>+</span></div>
-        <div class="faq-a">${f.a}</div>
-      </div>`;
+      html += `<div class="faq-item" id="faq-${i}"><div class="faq-q" onclick="toggleFaq(${i})">${f.q} <span>+</span></div><div class="faq-a">${f.a}</div></div>`;
     });
     html += `</div>`;
   }
   else if(section==="privacy"){
-    html += `<div class="account-sub"><h3>Account Privacy</h3>
-      <p style="color:#718096;margin-bottom:14px;font-size:14px">Manage your privacy preferences and data settings.</p>
+    html += `<div class="account-sub"><h3>Account Privacy</h3><p style="color:#718096;margin-bottom:14px;font-size:14px">Manage your privacy preferences and data settings.</p>
       <div class="privacy-row"><label>Share order data for recommendations</label><label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
       <div class="privacy-row"><label>Allow location tracking</label><label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
       <div class="privacy-row"><label>Receive promotional emails</label><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
@@ -1444,7 +1341,6 @@ function showAccountSub(section){
       </div>
     </div>`;
   }
-
   sub.innerHTML = html;
   window.scrollTo({top:0,behavior:"smooth"});
 }
