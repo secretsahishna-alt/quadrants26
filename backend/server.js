@@ -67,7 +67,7 @@ app.get("/api/products", async (req, res) => {
 });
 
 app.use("/api/orders", orderRoutes);
-const PORT = 5002;
+const PORT = 5003;
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
