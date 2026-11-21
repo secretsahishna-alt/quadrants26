@@ -3,6 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const pool = require("./db/postgres");
 const app = express();
+const { producer } = require("./services/kafka");
 
 app.use(cors());
 app.use(express.json());
@@ -69,6 +70,18 @@ app.get("/api/products", async (req, res) => {
 app.use("/api/orders", orderRoutes);
 const PORT = 5003;
 
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+async function startServer() {
+    try {
+        await producer.connect();
+        console.log("Kafka producer connected successfully");
+
+        app.listen(PORT, () => {
+            console.log(`Server running on port ${PORT}`);
+        });
+    } catch (error) {
+        console.error("Kafka connection failed:", error.message);
+        process.exitCode = 1;
+    }
+}
+
+startServer();

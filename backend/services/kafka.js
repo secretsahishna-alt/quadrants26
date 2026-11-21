@@ -13,6 +13,8 @@ const ca = fs.readFileSync(caPath, "utf8");
 const kafka = new Kafka({
     clientId: "quadrants26-backend",
     brokers: [process.env.KAFKA_BROKER],
+    connectionTimeout: 10000,
+    authenticationTimeout: 10000,
     ssl: {
         ca: [ca],
     },

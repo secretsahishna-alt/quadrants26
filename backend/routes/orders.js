@@ -3,6 +3,7 @@ const express = require("express");
 const router = express.Router();
 
 const pool = require("../db/postgres");
+const { producer } = require("../services/kafka");
 async function getDatabaseClient() {
     return await pool.connect();
 }
@@ -60,6 +61,7 @@ router.post("/", async (req, res) => {
     }
 
     let client;
+    let orderCommitted = false;
 
     try {
         client = await getDatabaseClient();
@@ -259,23 +261,76 @@ router.post("/", async (req, res) => {
         console.log("Inventory updated successfully");
 
         // Permanently save the order and inventory changes
+
         await client.query("COMMIT");
+        orderCommitted = true;
+
+        let eventPublished = false;
+
+        try {
+            const orderEvent = {
+                eventId: `order-${orderId}-${Date.now()}`,
+                eventType: "order.created",
+                data: {
+                    orderId,
+                    customer: {
+                        name: customerName
+                    },
+                    totalPaise,
+                    sellerOrders: createdSellerOrders
+                }
+            };
+
+
+            await producer.send({
+                topic: process.env.KAFKA_TOPIC || "orders.created",
+                messages: [
+                    {
+                        key: String(orderId),
+                        value: JSON.stringify(orderEvent)
+                    }
+                ]
+            });
+
+            eventPublished = true;
+            console.log("Order event published to Kafka:", orderId);
+
+        } catch (kafkaError) {
+            console.error(
+                "Order saved, but Kafka publishing failed:",
+                kafkaError.message
+            );
+        }
 
         return res.status(201).json({
             success: true,
             message: "Order placed successfully",
             orderId,
             totalPaise,
-            sellerOrders: createdSellerOrders
+            sellerOrders: createdSellerOrders,
+            eventPublished
         });
 
     } catch (error) {
         // Undo any unfinished database operations
-        if (client) {
+        if (client && !orderCommitted) {
             await client.query("ROLLBACK").catch(console.error);
         }
 
+        if (orderCommitted) {
+            console.error("Post-commit error:", error);
+
+            return res.status(201).json({
+                success: true,
+                message: "Order saved successfully",
+                orderId,
+                totalPaise,
+                sellerOrders: createdSellerOrders,
+                eventPublished: false
+            });
+        }
         console.error("Checkout error:", error);
+
 
         return res.status(500).json({
             success: false,
