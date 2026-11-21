@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Local Storefront</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ========== TOP NAVBAR: logo, delivery info, search, login, cart button ========== -->
+    <header class="navbar">
+        <h1 class="logo">Kornerwala</h1>
+        <span class="delivery">⚡ Delivery in 10 mins - Bengaluru</span>
+        <input id="searchInput" class="search" type="search" placeholder="Search for products and shops...">
+        <button class="btn-light">Login</button>
+        <button class="btn-dark" id="navCartBtn">My Cart (<span id="navCartCount">0</span>)</button>
+    </header>
+
+    <!-- ========== PAGE LAYOUT: 3 columns (sidebar | main | cart) ========== -->
+    <div class="layout">
+
+        <!-- ===== LEFT SIDEBAR: navigation links ===== -->
+        <aside class="sidebar">
+            <a href="#" class="active">🗂️ Categories</a>
+            <a href="#stores">🏪 Nearby Stores</a>
+            <a href="#">📦 My Orders</a>
+            <a href="#">👤 Profile</a>
+        </aside>
+
+        <!-- ===== CENTER: HOMEPAGE CONTENT ===== -->
+        <main class="main">
+
+            <!-- HOME VIEW: banners + categories + stores (hidden while viewing products) -->
+            <div id="homeView">
+
+                <!-- ---- Section 1: three promo banners side by side ---- -->
+                <section class="banners">
+                    <div class="banner teal">
+                        <div class="banner-text">
+                            <h2>Pharmacy at your doorstep!</h2>
+                            <p>Cough syrups, pain relief sprays &amp; more</p>
+                            <button class="banner-btn white">Order Now</button>
+                        </div>
+                        <span class="banner-icon">💊</span>
+                    </div>
+
+                    <div class="banner yellow">
+                        <div class="banner-text">
+                            <h2>Pet care supplies at your door</h2>
+                            <p>Food, treats, toys &amp; more</p>
+                            <button class="banner-btn dark">Order Now</button>
+                        </div>
+                        <span class="banner-icon">🐶</span>
+                    </div>
+
+                    <div class="banner blue">
+                        <div class="banner-text">
+                            <h2>No time for a diaper run?</h2>
+                            <p>Get baby care essentials</p>
+                            <button class="banner-btn dark">Order Now</button>
+                        </div>
+                        <span class="banner-icon">🍼</span>
+                    </div>
+                </section>
+
+                <!-- ---- Section 2: category row (cards are created by script.js) ---- -->
+                <section>
+                    <h3 class="row-title">Shop by Category</h3>
+                    <div class="row" id="categoryRow"></div>
+                </section>
+
+                <!-- ---- Section 3: recommended stores row (cards are created by script.js) ---- -->
+                <section id="stores">
+                    <h3 class="row-title">Recommended Stores Near You</h3>
+                    <div class="row" id="storeRow"></div>
+                </section>
+
+            </div> <!-- end of homeView -->
+
+            <!-- ---- PRODUCT VIEW: hidden until a category is clicked or the navbar search is used ---- -->
+            <div id="productView" class="hidden">
+                <button class="back-btn" id="backBtn">← Back to Categories</button>
+                <h3 class="row-title" id="productViewTitle"></h3>
+                <!-- Search box inside the view: filters by product name or shop name -->
+                <input id="viewSearch" class="view-search" type="search" placeholder="Search products or shops...">
+                <!-- Shop sections (header + product row) are created by script.js -->
+                <div id="shopSections"></div>
+            </div>
+
+        </main>
+
+        <!-- ===== RIGHT SIDEBAR: sticky cart panel ===== -->
+        <aside class="cart" id="cartPanel">
+            <h3>My Cart</h3>
+            <div id="cartItems"></div>
+            <div class="cart-total">Total: <strong id="cartTotal">₹0</strong></div>
+            <button class="btn-dark full">Checkout</button>
+        </aside>
+
+    </div>
+
+    <!-- ========== POPUP (MODAL): shows product details or store items ========== -->
+    <div class="modal-overlay" id="modal">
+        <div class="modal-box">
+            <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
