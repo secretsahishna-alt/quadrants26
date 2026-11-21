@@ -1,0 +1,19 @@
+
+# Installed Node.js dependencies
+node_modules/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Certificates and private keys
+*.pem
+*.key
+*.crt
+
+# macOS files
+.DS_Store
+
+# Log files
+*.log
