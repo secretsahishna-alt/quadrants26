@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login | Kornerwala</title>
+<style>
+:root{
+  --blinkit:#0C831F;
+  --blinkit-dark:#0a6e1a;
+  --green-deep:#064e2f;
+  --marble-1:#cdeed6;
+  --marble-2:#8fdca3;
+  --marble-3:#bfe9cb;
+  --page-bg:#f4f9f5;
+  --card-bg:#ffffff;
+  --text-dark:#16201a;
+  --text-muted:#6b7a70;
+  --border:#e1e8e2;
+  --input-bg:#f6f8f6;
+  --ring:rgba(12,131,31,.18);
+  --error:#e11d48;
+}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter','Segoe UI',system-ui,sans-serif}
+body{background:var(--page-bg);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;color:var(--text-dark)}
+
+.auth-container{display:flex;width:1080px;max-width:100%;min-height:640px;background:var(--card-bg);border:1px solid var(--border);border-radius:24px;overflow:hidden;box-shadow:0 30px 60px -20px rgba(6,78,47,.18)}
+
+/* ---------- LEFT: LIGHT GREEN MARBLE ---------- */
+.brand-panel{flex:1;position:relative;padding:40px;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;
+  background:
+    radial-gradient(circle at 18% 28%, rgba(255,255,255,.65), transparent 42%),
+    radial-gradient(circle at 82% 18%, rgba(12,131,31,.30), transparent 46%),
+    radial-gradient(circle at 64% 82%, rgba(255,255,255,.55), transparent 40%),
+    radial-gradient(circle at 28% 72%, rgba(12,131,31,.28), transparent 46%),
+    linear-gradient(135deg,var(--marble-1),var(--marble-2),var(--marble-3));
+  background-size:220% 220%,220% 220%,220% 220%,220% 220%,100% 100%;
+  animation:marble 18s ease-in-out infinite alternate;}
+@keyframes marble{0%{background-position:0% 0%,100% 0%,0% 100%,100% 100%,0 0}100%{background-position:100% 100%,0% 100%,100% 0%,0% 0%,0 0}}
+.brand-panel::before{content:"";position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.10'/%3E%3C/svg%3E");mix-blend-mode:multiply;pointer-events:none}
+.brand-panel::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 120%, rgba(6,78,47,.18), transparent 60%);pointer-events:none}
+
+.brand-logo {
+    position: absolute;
+    top: 32px;
+    left: 40px;
+    z-index: 3;
+}
+.brand-logo img {
+    height: 45px; /* Adjust this number if you want it bigger/smaller */
+    width: auto;
+}
+.brand-content{position:relative;z-index:3; transition: opacity 0.3s ease;}
+.brand-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:22px}
+.brand-head h1{font-size:30px;line-height:1.15;font-weight:800;color:var(--green-deep);letter-spacing:-.5px; transition: all 0.3s ease;}
+.brand-head p{font-size:13px;line-height:1.5;color:#0c5a2a;max-width:150px;opacity:.85; transition: all 0.3s ease;}
+
+.steps{display:flex;gap:12px}
+.step-card{flex:1;padding:14px 16px;border-radius:14px;display:flex;flex-direction:column;gap:18px;justify-content:space-between;min-height:84px;transition:.25s}
+.step-card .num{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:800}
+.step-card .label{font-size:13px;font-weight:600}
+.step-card.active{background:#fff;color:var(--text-dark);box-shadow:0 8px 20px rgba(6,78,47,.12);border:1px solid #fff}
+.step-card.active .num{background:var(--blinkit);color:#fff}
+.step-card.active .label{color:var(--text-dark)}
+.step-card:not(.active){background:rgba(255,255,255,.4);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.55)}
+.step-card:not(.active) .num{background:rgba(12,131,31,.18);color:var(--green-deep)}
+.step-card:not(.active) .label{color:#0c5a2a}
+
+/* ---------- RIGHT: FORM ---------- */
+.form-panel{flex:1.05;padding:48px 44px;display:flex;flex-direction:column;justify-content:center;background:#fff}
+.form-head{text-align:center;margin-bottom:20px}
+.form-head h2{font-size:24px;font-weight:800;letter-spacing:-.4px}
+.form-head p{font-size:13px;color:var(--text-muted);margin-top:6px}
+
+/* ROLE TOGGLE */
+.role-toggle{display:flex;background:var(--input-bg);border-radius:12px;padding:4px;margin-bottom:24px;border:1px solid var(--border)}
+.role-btn{flex:1;padding:10px;border:none;background:transparent;border-radius:9px;font-size:14px;font-weight:600;color:var(--text-muted);cursor:pointer;transition:.25s;display:flex;align-items:center;justify-content:center;gap:8px}
+.role-btn:hover{color:var(--text-dark)}
+.role-btn.active{background:#fff;color:var(--blinkit);box-shadow:0 2px 8px rgba(0,0,0,.06);font-weight:700}
+
+.field{margin-bottom:16px}
+.field label{display:block;font-size:12px;font-weight:600;margin-bottom:7px;color:var(--text-dark)}
+.field input{width:100%;padding:12px 14px;background:var(--input-bg);border:1px solid var(--border);border-radius:10px;font-size:14px;color:var(--text-dark);outline:none;transition:.2s}
+.field input::placeholder{color:#9aa79e}
+.field input:focus{border-color:var(--blinkit);box-shadow:0 0 0 3px var(--ring);background:#fff}
+.field input.error{border-color:var(--error);background:#fff1f4}
+.err-msg{display:none;color:var(--error);font-size:11px;margin-top:5px;font-weight:500}
+
+.pw-wrap{position:relative}
+.pw-wrap input{padding-right:42px}
+.eye{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--text-muted);display:grid;place-items:center;padding:4px}
+.eye:hover{color:var(--blinkit)}
+.eye .slash{display:none}
+.eye.off .slash{display:block}
+.eye.off .open{display:none}
+
+.btn-submit{width:100%;padding:14px;margin-top:8px;background:var(--blinkit);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;transition:.25s;box-shadow:0 8px 18px rgba(12,131,31,.25); text-decoration: none; display: block; text-align: center;}
+.btn-submit:hover{background:var(--blinkit-dark);transform:translateY(-1px);box-shadow:0 12px 24px rgba(12,131,31,.3)}
+.btn-submit:active{transform:translateY(0)}
+.btn-submit:disabled{background:#9bd3a6;cursor:not-allowed;transform:none;box-shadow:none}
+
+.form-footer{text-align:center;margin-top:22px;font-size:13px;color:var(--text-muted)}
+.form-footer a{color:var(--blinkit);font-weight:700;text-decoration:none}
+.form-footer a:hover{text-decoration:underline}
+
+/* Hidden field animation */
+.hidden-field{max-height:0;opacity:0;overflow:hidden;transition:all 0.3s ease;}
+.hidden-field.show{max-height:60px;opacity:1;margin-bottom:16px;}
+
+@media(max-width:860px){
+  .auth-container{flex-direction:column;min-height:auto;max-width:460px}
+  .brand-panel{padding:30px 24px;min-height:220px}
+  .brand-head h1{font-size:24px}
+  .brand-head p{display:none}
+  .steps{gap:8px}
+  .step-card{min-height:auto;padding:12px}
+  .step-card .label{display:none}
+  .form-panel{padding:34px 24px}
+}
+</style>
+</head>
+<body>
+<div class="auth-container">
+
+  <!-- LEFT: light green marble -->
+  <div class="brand-panel">
+    <div class="brand-logo"><img src="logo.png" alt="Kornerwala Logo"></div>
+    <div class="brand-content" id="brandContent">
+      <div class="brand-head">
+        <h1 id="brandTitle">Welcome<br>Shopper</h1>
+        <p id="brandDesc">Compare products and collect multi-shop purchases in one trusted trip.</p>
+      </div>
+      <div class="steps">
+        <div class="step-card active"><span class="num">1</span><span class="label">Browse local shops</span></div>
+        <div class="step-card"><span class="num">2</span><span class="label">Combine in one cart</span></div>
+        <div class="step-card"><span class="num">3</span><span class="label">Pickup or Delivery</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: form -->
+  <div class="form-panel">
+    <div class="form-head">
+      <h2 id="formTitle">Customer Login</h2>
+      <p>Enter your details to access your account.</p>
+    </div>
+
+    <!-- ROLE TOGGLE -->
+    <div class="role-toggle">
+      <button class="role-btn active" data-role="customer" onclick="switchRole('customer')">
+        <span>🛒</span> Customer
+      </button>
+      <button class="role-btn" data-role="shopkeeper" onclick="switchRole('shopkeeper')">
+        <span>🏪</span> Shopkeeper
+      </button>
+    </div>
+
+    <form id="loginForm" novalidate>
+      <!-- Dynamic Shop ID Field (Only for Shopkeepers) -->
+      <div class="field hidden-field" id="shopIdField">
+        <label for="shopId">Shop ID / Registered Name</label>
+        <input type="text" id="shopId" placeholder="eg. Sharma General Store">
+      </div>
+
+      <div class="field">
+        <label for="email" id="emailLabel">Email or Phone Number</label>
+        <input type="text" id="email" placeholder="you@example.com" required>
+        <div class="err-msg" id="emailError">Please enter a valid email or 10-digit phone number.</div>
+      </div>
+
+      <div class="field">
+        <label for="password">Password</label>
+        <div class="pw-wrap">
+          <input type="password" id="password" placeholder="Enter your password" required>
+          <button type="button" class="eye" id="togglePw" aria-label="Toggle password">
+            <svg class="open" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
+            <svg class="slash" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+          </button>
+        </div>
+        <div class="err-msg" id="passwordError">Password must be at least 6 characters.</div>
+      </div>
+
+      <!-- This acts as the submit button and the <a> tag redirect -->
+      <a href="#" class="btn-submit" id="submitBtn" onclick="handleLogin(event)">Sign In</a>
+    </form>
+
+    <div class="form-footer">
+      <span id="footerText">Don't have an account?</span> <a href="signup.html" id="footerLink">Create one</a>
+    </div>
+  </div>
+</div>
+
+<script>
+// --- ROLE SWITCHING LOGIC ---
+const roleData = {
+  customer: {
+    brandTitle: "Welcome<br>Shopper",
+    brandDesc: "Compare products and collect multi-shop purchases in one trusted trip.",
+    steps: ["Browse local shops", "Combine in one cart", "Pickup or Delivery"],
+    formTitle: "Customer Login",
+    emailLabel: "Email or Phone Number",
+    emailPlaceholder: "you@example.com",
+    footerText: "Don't have an account?",
+    footerLink: "Create one",
+    footerLinkHref: "signup.html",
+    redirectUrl: "index.html"
+  },
+  shopkeeper: {
+    brandTitle: "Welcome<br>Partner",
+    brandDesc: "Reach digital shoppers and receive clear, organized preparation tasks.",
+    steps: ["Verify shop identity", "Manage inventory", "Receive consolidated orders"],
+    formTitle: "Shopkeeper Login",
+    emailLabel: "Registered Shop Email or Phone",
+    emailPlaceholder: "shop@example.com",
+    footerText: "Want to partner with us?",
+    footerLink: "Register your shop",
+    footerLinkHref: "shop-signup.html",
+    redirectUrl: "seller-dashboard.html"
+  }
+};
+
+function switchRole(role) {
+  const data = roleData[role];
+  const isShop = role === 'shopkeeper';
+
+  // Update Toggle Buttons
+  document.querySelectorAll('.role-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.role === role);
+  });
+
+  // Update Left Panel with smooth fade
+  const brandContent = document.getElementById('brandContent');
+  brandContent.style.opacity = '0';
+  
+  setTimeout(() => {
+    document.getElementById('brandTitle').innerHTML = data.brandTitle;
+    document.getElementById('brandDesc').textContent = data.brandDesc;
+    
+    const stepLabels = document.querySelectorAll('.step-card .label');
+    stepLabels.forEach((label, index) => {
+      label.textContent = data.steps[index];
+    });
+    
+    brandContent.style.opacity = '1';
+  }, 150);
+
+  // Update Right Panel
+  document.getElementById('formTitle').textContent = data.formTitle;
+  document.getElementById('emailLabel').textContent = data.emailLabel;
+  document.getElementById('email').placeholder = data.emailPlaceholder;
+  document.getElementById('footerText').textContent = data.footerText;
+  
+  const footerLink = document.getElementById('footerLink');
+  footerLink.textContent = data.footerLink;
+  footerLink.href = data.footerLinkHref;
+
+  // Update the <a> tag href for the submit button
+  document.getElementById('submitBtn').href = data.redirectUrl;
+
+  // Show/Hide Shop ID Field
+  const shopIdField = document.getElementById('shopIdField');
+  if (isShop) {
+    shopIdField.classList.add('show');
+  } else {
+    shopIdField.classList.remove('show');
+  }
+
+  // Clear any previous errors
+  document.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
+  document.querySelectorAll('.err-msg').forEach(el => el.style.display = 'none');
+}
+
+// --- PASSWORD TOGGLE ---
+const eye = document.getElementById('togglePw');
+const passwordInput = document.getElementById('password');
+eye.addEventListener('click', () => {
+  const show = passwordInput.type === 'password';
+  passwordInput.type = show ? 'text' : 'password';
+  eye.classList.toggle('off', show);
+});
+
+// --- FORM VALIDATION & REDIRECT ---
+const form = document.getElementById('loginForm');
+const emailInput = document.getElementById('email');
+const submitBtn = document.getElementById('submitBtn');
+
+function validate() {
+  let ok = true;
+  const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$|^\d{10}$/;
+  
+  const eOk = emailRe.test(emailInput.value.trim());
+  emailInput.classList.toggle('error', !eOk);
+  document.getElementById('emailError').style.display = eOk ? 'none' : 'block';
+  if (!eOk) ok = false;
+
+  const pOk = passwordInput.value.length >= 6;
+  passwordInput.classList.toggle('error', !pOk);
+  document.getElementById('passwordError').style.display = pOk ? 'none' : 'block';
+  if (!pOk) ok = false;
+
+  return ok;
+}
+
+[emailInput, passwordInput].forEach(input => {
+  input.addEventListener('input', () => {
+    if (input.classList.contains('error')) {
+      input.classList.remove('error');
+      input.parentElement.querySelector('.err-msg').style.display = 'none';
+    }
+  });
+});
+
+function handleLogin(e) {
+  e.preventDefault();
+  if (!validate()) return;
+
+  const activeRole = document.querySelector('.role-btn.active').dataset.role;
+  const redirectUrl = roleData[activeRole].redirectUrl;
+  
+  submitBtn.style.pointerEvents = 'none';
+  submitBtn.textContent = activeRole === 'customer' ? 'Signing in...' : 'Verifying shop...';
+
+  // Simulate network delay, then follow the <a> tag link
+  setTimeout(() => {
+    window.location.href = redirectUrl; // This opens the seller dashboard or customer page
+  }, 1000); 
+}
+</script>
+</body>
+</html>
