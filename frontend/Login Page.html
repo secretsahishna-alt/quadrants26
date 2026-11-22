@@ -181,11 +181,12 @@ body{background:var(--page-bg);min-height:100vh;display:flex;align-items:center;
       </div>
 
       <!-- This acts as the submit button and the <a> tag redirect -->
-      <a href="#" class="btn-submit" id="submitBtn" onclick="handleLogin(event)">Sign In</a>
+      <button type="button" class="btn-submit" id="submitBtn" onclick="handleLogin(event)">Sign In</button>
+      <p class="hidden" id="authMessage" role="status"></p>
     </form>
 
     <div class="form-footer">
-      <span id="footerText">Don't have an account?</span> <a href="signup.html" id="footerLink">Create one</a>
+      <span>Authentication and account creation are not configured in this demo.</span>
     </div>
   </div>
 </div>
@@ -200,10 +201,6 @@ const roleData = {
     formTitle: "Customer Login",
     emailLabel: "Email or Phone Number",
     emailPlaceholder: "you@example.com",
-    footerText: "Don't have an account?",
-    footerLink: "Create one",
-    footerLinkHref: "signup.html",
-    redirectUrl: "dashboard.html" // ✅ UPDATED TO YOUR TEAMMATE'S FILE
   },
   shopkeeper: {
     brandTitle: "Welcome<br>Partner",
@@ -212,10 +209,6 @@ const roleData = {
     formTitle: "Shopkeeper Login",
     emailLabel: "Registered Shop Email or Phone",
     emailPlaceholder: "shop@example.com",
-    footerText: "Want to partner with us?",
-    footerLink: "Register your shop",
-    footerLinkHref: "shop-signup.html",
-    redirectUrl: "seller-dashboard.html"
   }
 };
 
@@ -248,15 +241,6 @@ function switchRole(role) {
   document.getElementById('formTitle').textContent = data.formTitle;
   document.getElementById('emailLabel').textContent = data.emailLabel;
   document.getElementById('email').placeholder = data.emailPlaceholder;
-  document.getElementById('footerText').textContent = data.footerText;
-  
-  const footerLink = document.getElementById('footerLink');
-  footerLink.textContent = data.footerLink;
-  footerLink.href = data.footerLinkHref;
-
-  // Update the <a> tag href for the submit button
-  document.getElementById('submitBtn').href = data.redirectUrl;
-
   // Show/Hide Shop ID Field
   const shopIdField = document.getElementById('shopIdField');
   if (isShop) {
@@ -279,51 +263,12 @@ eye.addEventListener('click', () => {
   eye.classList.toggle('off', show);
 });
 
-// --- FORM VALIDATION & REDIRECT ---
-const form = document.getElementById('loginForm');
-const emailInput = document.getElementById('email');
-const submitBtn = document.getElementById('submitBtn');
-
-function validate() {
-  let ok = true;
-  const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$|^\d{10}$/;
-  
-  const eOk = emailRe.test(emailInput.value.trim());
-  emailInput.classList.toggle('error', !eOk);
-  document.getElementById('emailError').style.display = eOk ? 'none' : 'block';
-  if (!eOk) ok = false;
-
-  const pOk = passwordInput.value.length >= 6;
-  passwordInput.classList.toggle('error', !pOk);
-  document.getElementById('passwordError').style.display = pOk ? 'none' : 'block';
-  if (!pOk) ok = false;
-
-  return ok;
-}
-
-[emailInput, passwordInput].forEach(input => {
-  input.addEventListener('input', () => {
-    if (input.classList.contains('error')) {
-      input.classList.remove('error');
-      input.parentElement.querySelector('.err-msg').style.display = 'none';
-    }
-  });
-});
-
+// --- AUTHENTICATION STATUS ---
 function handleLogin(e) {
   e.preventDefault();
-  if (!validate()) return;
-
-  const activeRole = document.querySelector('.role-btn.active').dataset.role;
-  const redirectUrl = roleData[activeRole].redirectUrl;
-  
-  submitBtn.style.pointerEvents = 'none';
-  submitBtn.textContent = activeRole === 'customer' ? 'Signing in...' : 'Verifying shop...';
-
-  // Simulate network delay, then follow the <a> tag link
-  setTimeout(() => {
-    window.location.href = redirectUrl; // This opens the seller dashboard or customer page
-  }, 1000); 
+  const message=document.getElementById('authMessage');
+  message.textContent='Authentication is not configured. No account was signed in.';
+  message.classList.remove('hidden');
 }
 </script>
 </body>

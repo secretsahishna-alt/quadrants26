@@ -1,6 +1,14 @@
 require("dotenv").config();
 
+const fs = require("fs");
+const path = require("path");
 const { Pool } = require("pg");
+
+const caPath = process.env.PGSSL_CA_PATH || process.env.KAFKA_CA_PATH;
+const ssl = { rejectUnauthorized: true };
+if (caPath) {
+    ssl.ca = fs.readFileSync(path.resolve(__dirname, "..", caPath), "utf8");
+}
 
 const pool = new Pool({
     host: process.env.PGHOST,
@@ -8,9 +16,7 @@ const pool = new Pool({
     user: process.env.PGUSER,
     password: process.env.PGPASSWORD,
     database: process.env.PGDATABASE,
-    ssl: {
-        rejectUnauthorized: false
-    }
+    ssl
 });
 
 module.exports = pool;

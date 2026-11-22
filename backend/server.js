@@ -1,11 +1,26 @@
+const path = require("path");
+require("dotenv").config({ path: path.join(__dirname, ".env") });
 const orderRoutes = require("./routes/orders");
 const express = require("express");
 const cors = require("cors");
 const pool = require("./db/postgres");
 const app = express();
-const { producer } = require("./services/kafka");
+const { producer, kafkaError } = require("./services/kafka");
 
-app.use(cors());
+const allowedOrigins = new Set([
+    "http://localhost:8000",
+    "http://127.0.0.1:8000",
+    ...(process.env.CORS_ORIGINS || "")
+        .split(",")
+        .map((origin) => origin.trim())
+        .filter(Boolean),
+]);
+
+app.use(cors({
+    origin(origin, callback) {
+        callback(null, !origin || allowedOrigins.has(origin));
+    },
+}));
 app.use(express.json());
 
 app.get("/api/health", (req, res) => {
@@ -69,20 +84,30 @@ app.get("/api/products", async (req, res) => {
 
 app.use("/api/orders", orderRoutes);
 app.use("/api/search", require("./routes/search"));
-const PORT = 5003;
+const PORT = Number(process.env.PORT) || 5003;
 
-async function startServer() {
-    try {
-        await producer.connect();
-        console.log("Kafka producer connected successfully");
-
-        app.listen(PORT, () => {
-            console.log(`Server running on port ${PORT}`);
-        });
-    } catch (error) {
-        console.error("Kafka connection failed:", error.message);
-        process.exitCode = 1;
+const server = app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+    if (kafkaError) {
+        console.warn(`Kafka is unavailable; orders can still be saved: ${kafkaError.message}`);
+        return;
     }
-}
 
-startServer();
+    producer.connect()
+        .then(() => console.log("Kafka producer connected successfully"))
+        .catch((error) => console.error("Kafka connection failed; orders can still be saved:", error.message));
+});
+
+server.on("error", (error) => {
+    console.error("Backend server failed to start:", error.message);
+    process.exitCode = 1;
+});
+
+process.on("SIGTERM", () => {
+    server.close(async () => {
+        await producer.disconnect().catch((error) => {
+            console.error("Kafka disconnect failed:", error.message);
+        });
+        await pool.end();
+    });
+});

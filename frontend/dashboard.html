@@ -375,15 +375,15 @@ section { margin-bottom: 28px; }
 
 <header class="navbar">
   <h1 class="logo">Kornerwala</h1>
-  <span class="delivery">⚡ Delivery in 10 mins - Bengaluru</span>
+  <span class="delivery">Shop local sellers in Bengaluru</span>
   <input id="searchInput" class="search" type="search" placeholder="Search for products and shops...">
-  <button class="btn-light" onclick="showAccount(event)">Login</button>
+  <button class="btn-light" onclick="showAccount(event)">Account</button>
   <button class="btn-dark" id="navCartBtn">My Cart (<span id="navCartCount">0</span>)</button>
 </header>
 
 <div class="layout">
   <aside class="sidebar">
-    <a href="#" onclick="showHome(event)" class="active" id="homeLink">🗂️ Categories</a>
+    <a href="#" onclick="showHome(event)" class="active" id="homeLink">🛍️ Browse products</a>
     <a href="#" onclick="showNearbyStores(event)" id="storesLink">🏪 Nearby Stores</a>
     <a href="#" onclick="showAccount(event)" id="accountLink">👤 My Account</a>
   </aside>
@@ -392,11 +392,11 @@ section { margin-bottom: 28px; }
     <!-- HOME VIEW -->
     <div id="homeView">
       <section class="banners">
-        <div class="banner teal"><div class="banner-text"><h2>Pharmacy at your doorstep!</h2><p>Cough syrups, pain relief sprays &amp; more</p><button class="banner-btn white">Order Now</button></div><span class="banner-icon">💊</span></div>
-        <div class="banner yellow"><div class="banner-text"><h2>Pet care supplies at your door</h2><p>Food, treats, toys &amp; more</p><button class="banner-btn dark">Order Now</button></div><span class="banner-icon">🐶</span></div>
-        <div class="banner blue"><div class="banner-text"><h2>No time for a diaper run?</h2><p>Get baby care essentials</p><button class="banner-btn dark">Order Now</button></div><span class="banner-icon">🍼</span></div>
+        <div class="banner teal"><div class="banner-text"><h2>Shop nearby groceries</h2><p>Browse live products from local sellers</p><button class="banner-btn white" onclick="showCategory('grocery')">Browse Products</button></div><span class="banner-icon">🛒</span></div>
+        <div class="banner yellow"><div class="banner-text"><h2>Everyday essentials nearby</h2><p>See current prices and stock</p><button class="banner-btn dark" onclick="showCategory('grocery')">Browse Products</button></div><span class="banner-icon">🏪</span></div>
+        <div class="banner blue"><div class="banner-text"><h2>Find local favorites</h2><p>Availability comes from the seller catalog</p><button class="banner-btn dark" onclick="showCategory('grocery')">Browse Products</button></div><span class="banner-icon">📦</span></div>
       </section>
-      <section><h3 class="row-title">Shop by Category</h3><div class="row" id="categoryRow"></div></section>
+      <section><h3 class="row-title">Browse available products</h3><div class="row" id="categoryRow"></div></section>
       <section><h3 class="row-title">Recommended Stores Near You</h3><div class="row" id="storeRow"></div></section>
     </div>
 
@@ -409,7 +409,6 @@ section { margin-bottom: 28px; }
         <select id="sortBy" onchange="sortStores()">
           <option value="default">Sort By: Default</option>
           <option value="name">Sort By: Name (A-Z)</option>
-          <option value="time">Sort By: Delivery Time</option>
         </select>
       </div>
       <div id="stores-grid" class="stores-grid"></div>
@@ -442,8 +441,6 @@ section { margin-bottom: 28px; }
               <option value="popularity">Sort: Popularity</option>
               <option value="price-asc">Price: Low to High</option>
               <option value="price-desc">Price: High to Low</option>
-              <option value="rating">Customer Rating</option>
-              <option value="discount">Discount</option>
             </select>
           </div>
           <div class="product-grid" id="shopProductGrid"></div>
@@ -474,7 +471,7 @@ section { margin-bottom: 28px; }
           <li><a onclick="showAccountSub('giftcards')">E-Gift Cards</a></li>
           <li><a onclick="showAccountSub('faq')">FAQ's</a></li>
           <li class="highlight"><a onclick="showAccountSub('privacy')">Account Privacy</a></li>
-          <li class="logout"><a onclick="handleLogout()">Log Out</a></li>
+          <li class="logout"><a onclick="handleLogout()">Return to shopping</a></li>
         </ul>
       </div>
       <div id="accountSub" class="hidden"></div>
@@ -492,7 +489,7 @@ section { margin-bottom: 28px; }
           <div id="ckProductList"></div>
         </div>
         <div class="checkout-right">
-          <div class="ck-address-box">📍 Delivering to: <span class="pin">Koramangala, 560034</span></div>
+          <div class="ck-address-box">🧾 Order totals and availability are confirmed by the server at checkout.</div>
           <div class="bill-section">
             <h4>Bill details</h4>
             <div id="ckBillRows"></div>
@@ -518,14 +515,14 @@ section { margin-bottom: 28px; }
           <div class="mode-card" id="modePickup" onclick="selectMode('pickup')">
             <div class="mode-icon">🏪</div>
             <div class="mode-title">Pick up point</div>
-            <div class="mode-desc">Collect your order from the store. All items will be ready at one location.</div>
-            <span class="mode-eta">Ready in 10-15 mins</span>
+            <div class="mode-desc">Collect items from each seller listed in the pickup summary.</div>
+            <span class="mode-eta">Confirm readiness with the seller</span>
           </div>
           <div class="mode-card" id="modeDelivery" onclick="selectMode('delivery')">
             <div class="mode-icon">🚪</div>
             <div class="mode-title">Delivery on gate</div>
             <div class="mode-desc">We'll deliver the order directly to your gate/doorstep.</div>
-            <span class="mode-eta">Delivered in 10 mins</span>
+            <span class="mode-eta">Delivery timing is not available</span>
           </div>
         </div>
 
@@ -535,51 +532,16 @@ section { margin-bottom: 28px; }
           <div id="proceedSummaryItems"></div>
         </div>
 
-        <!-- 3. Payment Methods (NEW) -->
+        <!-- Demo checkout records the order; it does not process a payment. -->
         <div class="proceed-summary">
-          <h4>💳 Payment Method</h4>
-          <div class="payment-methods" style="display: flex; flex-direction: column; gap: 10px;">
-            <label class="payment-option" style="display: flex; align-items: center; gap: 12px; padding: 14px; border: 1px solid #e2e8f0; border-radius: 10px; cursor: pointer; transition: .2s;">
-              <input type="radio" name="payment" checked style="accent-color: #15803d; width: 18px; height: 18px;">
-              <span style="font-size: 20px; width: 30px; text-align: center;">📱</span>
-              <div style="flex: 1;">
-                <div style="font-weight: 600; font-size: 14px;">UPI (GPay, PhonePe, Paytm)</div>
-                <div style="font-size: 12px; color: #64748b;">Pay instantly using your UPI ID</div>
-              </div>
-            </label>
-            <label class="payment-option" style="display: flex; align-items: center; gap: 12px; padding: 14px; border: 1px solid #e2e8f0; border-radius: 10px; cursor: pointer; transition: .2s;">
-              <input type="radio" name="payment" style="accent-color: #15803d; width: 18px; height: 18px;">
-              <span style="font-size: 20px; width: 30px; text-align: center;">💳</span>
-              <div style="flex: 1;">
-                <div style="font-weight: 600; font-size: 14px;">Credit / Debit Card</div>
-                <div style="font-size: 12px; color: #64748b;">Visa, Mastercard, RuPay, Amex</div>
-              </div>
-            </label>
-            <label class="payment-option" style="display: flex; align-items: center; gap: 12px; padding: 14px; border: 1px solid #e2e8f0; border-radius: 10px; cursor: pointer; transition: .2s;">
-              <input type="radio" name="payment" style="accent-color: #15803d; width: 18px; height: 18px;">
-              <span style="font-size: 20px; width: 30px; text-align: center;">🏦</span>
-              <div style="flex: 1;">
-                <div style="font-weight: 600; font-size: 14px;">NetBanking</div>
-                <div style="font-size: 12px; color: #64748b;">HDFC, SBI, ICICI, Axis & more</div>
-              </div>
-            </label>
-            <label class="payment-option" style="display: flex; align-items: center; gap: 12px; padding: 14px; border: 1px solid #e2e8f0; border-radius: 10px; cursor: pointer; transition: .2s;">
-              <input type="radio" name="payment" style="accent-color: #15803d; width: 18px; height: 18px;">
-              <span style="font-size: 20px; width: 30px; text-align: center;">👛</span>
-              <div style="flex: 1;">
-                <div style="font-weight: 600; font-size: 14px;">Wallets</div>
-                <div style="font-size: 12px; color: #64748b;">Amazon Pay, Freecharge, Mobikwik</div>
-              </div>
-            </label>
-            <label class="payment-option" style="display: flex; align-items: center; gap: 12px; padding: 14px; border: 1px solid #e2e8f0; border-radius: 10px; cursor: pointer; transition: .2s;">
-              <input type="radio" name="payment" style="accent-color: #15803d; width: 18px; height: 18px;">
-              <span style="font-size: 20px; width: 30px; text-align: center;">💵</span>
-              <div style="flex: 1;">
-                <div style="font-weight: 600; font-size: 14px;">Cash on Delivery (COD)</div>
-                <div style="font-size: 12px; color: #64748b;">Pay cash when you receive your order</div>
-              </div>
-            </label>
-          </div>
+          <h4>Customer details</h4>
+          <label for="customerName">Name</label>
+          <input id="customerName" type="text" maxlength="100" autocomplete="name" required>
+          <label for="customerPhone">Phone</label>
+          <input id="customerPhone" type="tel" maxlength="20" autocomplete="tel" required>
+          <label id="deliveryAddressLabel" for="deliveryAddress" class="hidden">Delivery address</label>
+          <textarea id="deliveryAddress" class="hidden" maxlength="1000" autocomplete="street-address"></textarea>
+          <p>Demo checkout records the order only; no payment is processed.</p>
         </div>
 
         <!-- 4. Bill summary -->
@@ -589,7 +551,7 @@ section { margin-bottom: 28px; }
         </div>
 
         <!-- 5. Place Order Button -->
-        <button class="proceed-btn" style="width:100%; padding:16px; background:#15803d; color:#fff; font-size:16px; font-weight:700; border-radius:12px; margin-top:16px; border:none; cursor:pointer; transition: background .15s;" onmouseover="this.style.background='#166534'" onmouseout="this.style.background='#15803d'" onclick="confirmOrder(this)">Place Order & Pay</button>
+        <button class="proceed-btn" style="width:100%; padding:16px; background:#15803d; color:#fff; font-size:16px; font-weight:700; border-radius:12px; margin-top:16px; border:none; cursor:pointer; transition: background .15s;" onmouseover="this.style.background='#166534'" onmouseout="this.style.background='#15803d'" onclick="confirmOrder(this)">Place Demo Order</button>
       </div>
     </div>
 
@@ -624,7 +586,34 @@ section { margin-bottom: 28px; }
   </div>
 </div>
 
+<script src="/config.js"></script>
 <script>
+/* ========== API CONFIGURATION ========== */
+const API_BASE = String(window.QUADRANTS_API_URL || (
+  ["localhost", "127.0.0.1"].includes(window.location.hostname)
+    ? "http://localhost:5003"
+    : ""
+)).replace(/\/$/, "");
+let apiDataLoaded = false;
+let searchResults = null;
+let searchError = "";
+let searchRequest = 0;
+let searchTimer = null;
+let latestOrder = null;
+let apiLoadError = "";
+function apiUrl(path) {
+  if (!API_BASE) throw new Error("Set QUADRANTS_API_URL in frontend/config.js to the backend URL.");
+  return API_BASE + path;
+}
+function money(paise) {
+  return new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR" }).format(paise / 100);
+}
+function escapeHtml(value) {
+  return String(value ?? "").replace(/[&<>"']/g, character => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+  })[character]);
+}
+
 /* ========== IMAGE HELPERS ========== */
 function photo(name){
   const label=name.replace(/[-_]+/g," ").replace(/\b\w/g,c=>c.toUpperCase());
@@ -640,97 +629,74 @@ function tile(name){
 function img(src,alt,cls){ return `<img class="${cls||""}" src="${src}" alt="${alt}" loading="lazy" onerror="this.onerror=null;this.src=tile(this.alt)">`; }
 
 /* ========== DATA ========== */
-const stores = [
-  { id:1, name:"FreshMart Kirana", time:"10 mins", rating:4.3, km:1.2, img:photo("store-freshmart") },
-  { id:2, name:"GreenLeaf Organics", time:"12 mins", rating:4.6, km:2.0, img:photo("store-greenleaf") },
-  { id:3, name:"City MedPlus Pharmacy", time:"8 mins", rating:4.4, km:0.9, img:photo("store-medplus") },
-  { id:4, name:"Daily Dairy & Bakery", time:"10 mins", rating:4.5, km:1.5, img:photo("store-dairy") },
-  { id:5, name:"Bengaluru Superstore", time:"15 mins", rating:4.1, km:3.4, img:photo("store-superstore") },
-  { id:6, name:"QuickBite Snacks", time:"9 mins", rating:4.0, km:1.1, img:photo("store-quickbite") }
-];
+let stores = [];
 
-// UPGRADED: Categories now use real Unsplash images
-const categories = [
-  { id:"fruits", name:"Fruits & Vegetables", img:"https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=300&h=200&fit=crop" },
-  { id:"dairy", name:"Dairy Products", img:"https://images.unsplash.com/photo-1628088062854-d1870b4553da?w=300&h=200&fit=crop" },
-  { id:"drinks", name:"Cold Drinks & Juices", img:"https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=300&h=200&fit=crop" },
-  { id:"snacks", name:"Snacks & Munchies", img:"https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=300&h=200&fit=crop" },
-  { id:"bakery", name:"Bakery & Eggs", img:"https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=300&h=200&fit=crop" },
-  { id:"care", name:"Personal Care", img:"https://images.unsplash.com/photo-1556228720-195a672e8a03?w=300&h=200&fit=crop" }
-];
+// Product records do not include category data, so browse the complete live catalog.
+const categories = [{ id:"grocery", name:"All available products", img:photo("local-products") }];
+let products = [];
 
-const catNames = { fruits:"Fruits & Veg", dairy:"Dairy", drinks:"Drinks", snacks:"Snacks", bakery:"Bakery & Eggs", care:"Personal Care", grocery:"Grocery" };
-const dealChips = [
-  { k:"foryou", label:"For you" }, { k:"trending", label:"Trending" },
-  { k:"loved", label:"Customer's most loved" }, { k:"coupon", label:"Coupons" },
-  { k:"lightning", label:"Lightning Deals" }
-];
+/* ========== API DATA LOADING ========== */
+async function loadFromAPI() {
+  try {
+    const [sellersRes, productsRes] = await Promise.all([
+      fetch(apiUrl("/api/sellers")),
+      fetch(apiUrl("/api/products"))
+    ]);
 
-function mkP(id,cat,storeId,name,brand,unit,price,mrp,rating,reviews,tags){
-  return { id,cat,storeId,name,brand,unit,price,mrp,rating,reviews,tags, img:photo(name.toLowerCase().replace(/[^a-z0-9]+/g,"-")) };
+    if (!sellersRes.ok || !productsRes.ok) {
+      throw new Error("API returned " + sellersRes.status + "/" + productsRes.status);
+    }
+
+    const sellersData = await sellersRes.json();
+    const productsData = await productsRes.json();
+
+    if (!sellersData.success || !productsData.success ||
+        !Array.isArray(sellersData.sellers) || !Array.isArray(productsData.products)) {
+      throw new Error("API response indicates failure");
+    }
+
+    stores = sellersData.sellers.map(s => {
+      return {
+        id: s.id,
+        name: s.name,
+        locality: s.locality || "",
+        address: s.address || "",
+        img: photo(s.name.toLowerCase().replace(/[^a-z0-9]+/g, "-"))
+      };
+    });
+
+    products = productsData.products.map(p => {
+      if (!Number.isSafeInteger(Number(p.id)) ||
+          !Number.isSafeInteger(Number(p.pricePaise)) ||
+          !Number.isSafeInteger(Number(p.stock)) ||
+          Number(p.pricePaise) < 0 || Number(p.stock) < 0) {
+        throw new Error("The products API returned invalid price or stock data.");
+      }
+      return {
+        id: Number(p.id),
+        cat: "grocery",
+        storeId: Number(p.sellerId),
+        name: p.name,
+        brand: p.sellerName,
+        unit: p.description || "",
+        pricePaise: Number(p.pricePaise),
+        price: Number(p.pricePaise) / 100,
+        stock: Number(p.stock),
+        img: photo(p.name.toLowerCase().replace(/[^a-z0-9]+/g, "-"))
+      };
+    });
+
+    apiDataLoaded = true;
+
+  } catch (err) {
+    console.error("API data load failed:", err.message);
+    stores = [];
+    products = [];
+    apiDataLoaded = false;
+    apiLoadError = err.message;
+    throw err;
+  }
 }
-const products = [
-  mkP(1,"fruits",2,"Fresh Bananas","FarmDirect","1 dozen",49,60,4.3,210,["foryou","loved"]),
-  mkP(2,"fruits",2,"Organic Tomatoes","FarmDirect","500 g",35,42,4.2,150,["trending"]),
-  mkP(3,"fruits",1,"Green Apples","FreshFarm","1 kg",120,140,4.2,320,["foryou"]),
-  mkP(4,"fruits",2,"Fresh Spinach","FarmDirect","250 g",25,30,4.1,90,[]),
-  mkP(5,"dairy",4,"Farm Milk","Amul","500 ml",32,35,4.6,820,["foryou","loved"]),
-  mkP(6,"dairy",4,"Fresh Paneer","Amul","200 g",90,100,4.5,410,["trending"]),
-  mkP(7,"dairy",1,"Thick Curd","Amul","400 g",45,50,4.4,510,["loved"]),
-  mkP(8,"dairy",4,"Salted Butter","Amul","100 g",58,62,4.4,260,["coupon"]),
-  mkP(9,"drinks",5,"Orange Juice","Real","1 L",110,125,4.2,330,["foryou"]),
-  mkP(10,"drinks",5,"Cola","Coca-Cola","750 ml",40,45,4.3,620,["trending"]),
-  mkP(11,"drinks",1,"Coconut Water","Paper Boat","200 ml",35,40,4.1,180,["coupon"]),
-  mkP(12,"snacks",6,"Classic Chips","Bingo","52 g",20,25,4.0,240,["trending"]),
-  mkP(13,"snacks",6,"Cream Biscuits","Parle","120 g",30,35,4.3,310,["loved"]),
-  mkP(14,"snacks",5,"Spicy Namkeen","Haldiram","200 g",55,65,4.4,470,["loved"]),
-  mkP(15,"bakery",4,"Whole Wheat Bread","Britannia","400 g",45,50,4.3,390,["loved"]),
-  mkP(16,"bakery",1,"Brown Eggs","FarmYum","12 pcs",78,90,4.3,260,["trending"]),
-  mkP(17,"care",3,"Herbal Soap","Dettol","100 g",58,65,4.3,540,["foryou"]),
-  mkP(18,"care",3,"Mint Toothpaste","Colgate","150 g",89,99,4.5,720,["loved"]),
-  mkP(19,"grocery",1,"Basmati Rice","India Gate","1 kg",240,280,4.5,720,["trending","loved"]),
-  mkP(20,"grocery",1,"Whole Wheat Atta","Aashirvaad","5 kg",250,280,4.6,1500,["foryou"]),
-  mkP(21,"grocery",1,"Refined Sugar","Madhur","1 kg",45,50,4.0,90,[]),
-  mkP(22,"grocery",1,"Sunflower Oil","Fortune","1 L",140,160,4.3,430,["lightning"]),
-  mkP(23,"drinks",1,"Green Tea","Tata Tea","100 g",130,150,4.4,260,["coupon"]),
-  mkP(24,"care",1,"Detergent Powder","Surf Excel","1 kg",110,130,4.5,800,["loved"]),
-  mkP(25,"care",2,"Organic Honey","Dabur","500 g",190,220,4.6,340,["loved","coupon"]),
-  mkP(26,"grocery",2,"Rolled Oats","Quaker","500 g",180,200,4.5,290,["foryou"]),
-  mkP(27,"grocery",2,"Quinoa","Organic Tattva","500 g",160,190,4.3,120,["lightning"]),
-  mkP(28,"snacks",2,"Almonds","Badshah","250 g",320,380,4.7,560,["trending","loved"]),
-  mkP(29,"care",2,"Coconut Oil","NutriCo","1 L",260,300,4.4,210,[]),
-  mkP(30,"grocery",2,"Jaggery","Organic Tattva","500 g",70,85,4.2,140,["coupon"]),
-  mkP(31,"grocery",2,"Sprout Mix","True Elements","200 g",60,75,4.0,80,[]),
-  mkP(32,"care",3,"Cough Syrup","Benadryl","100 ml",120,140,4.2,190,["trending"]),
-  mkP(33,"care",3,"Pain Relief Spray","Volini","100 ml",140,160,4.4,230,["coupon"]),
-  mkP(34,"care",3,"Multivitamin Tablets","Revital","30 tabs",290,330,4.6,410,["loved","foryou"]),
-  mkP(35,"care",3,"Hand Sanitizer","Lifebuoy","500 ml",99,120,4.1,320,["lightning"]),
-  mkP(36,"care",3,"Vitamin C Tablets","Limcee","15 tabs",45,55,4.5,270,["trending"]),
-  mkP(37,"care",3,"Antacid Tablets","Digene","15 tabs",85,95,4.0,160,[]),
-  mkP(38,"care",3,"Face Wash","Himalaya","150 ml",110,130,4.4,380,["coupon"]),
-  mkP(39,"care",3,"Band-Aids","Hansaplast","20 pcs",60,70,4.3,210,[]),
-  mkP(40,"bakery",4,"Butter Croissant","BakeHouse","2 pcs",40,55,4.2,95,["lightning"]),
-  mkP(41,"bakery",4,"Chocolate Cake","BakeHouse","500 g",250,300,4.7,180,["trending","loved"]),
-  mkP(42,"dairy",4,"Cheese Slices","Amul","200 g",135,150,4.4,260,["foryou"]),
-  mkP(43,"bakery",4,"Brown Bread","Modern","400 g",40,45,4.0,150,[]),
-  mkP(44,"dairy",4,"Pure Ghee","Amul","500 ml",320,360,4.8,540,["loved","coupon"]),
-  mkP(45,"bakery",4,"Glazed Donuts","BakeHouse","3 pcs",90,110,4.1,70,["lightning"]),
-  mkP(46,"snacks",5,"Potato Chips","Lay's","100 g",40,50,4.2,610,["coupon"]),
-  mkP(47,"care",5,"Shampoo","Pantene","340 ml",210,240,4.5,390,["foryou"]),
-  mkP(48,"care",5,"Toothbrush 2-pack","Oral-B","2 pcs",70,80,4.3,240,[]),
-  mkP(49,"care",5,"Dishwash Gel","Vim","500 ml",99,120,4.4,330,["lightning"]),
-  mkP(50,"snacks",5,"Chocolate Bar","Cadbury","180 g",80,90,4.6,720,["trending","loved"]),
-  mkP(51,"drinks",5,"Energy Drink","Red Bull","250 ml",125,135,4.1,280,["coupon"]),
-  mkP(52,"snacks",5,"Instant Noodles","Maggi","4 pack",56,60,4.5,830,["loved","foryou"]),
-  mkP(53,"bakery",6,"Butter Cookies","Britannia","150 g",60,70,4.4,190,["foryou"]),
-  mkP(54,"snacks",6,"Popcorn","Act II","100 g",45,55,4.2,160,["lightning"]),
-  mkP(55,"bakery",6,"Choco Chip Cookies","Theobroma","150 g",90,110,4.5,120,["coupon"]),
-  mkP(56,"snacks",6,"Salted Peanuts","Rostamp","200 g",50,60,4.1,90,[]),
-  mkP(57,"drinks",6,"Mango Drink","Frooti","200 ml",30,35,4.2,210,["trending"]),
-  mkP(58,"snacks",6,"Cheese Wafers","Uncle Chipps","60 g",25,30,3.9,140,[]),
-  mkP(59,"snacks",6,"Caramel Candy Jar","Cadbury","120 g",120,150,4.3,75,["loved"]),
-  mkP(60,"snacks",6,"Spicy Chips","Bingo","150 g",50,60,4.0,180,["coupon"])
-];
 
 /* ========== STATE ========== */
 let cart = [];
@@ -740,45 +706,28 @@ let shopFilter = null;
 let priceBounds = [0,1000];
 let selectedDeliveryMode = null;
 
-const loggedInUser = { email: "rishika.agrawal@gmail.com", name: "rishika agrawal" };
+const loggedInUser = { email: "Guest checkout" };
+const myOrders = [];
 
-const myOrders = [
-  { id: "ORD-7697", status: "Delivered", statusDate: "30 October", statusSub: "Package was handed to resident", placedDate: "12 October 2026", total: 554.78, shipTo: "rishika agrawal", returnWindow: "9 November 2026", items: [{ name: "Swiss Beauty Harry Potter Discovery Box", img: photo("harry-potter-box") }] },
-  { id: "ORD-7682", status: "Refunded", statusSub: "Your return is in transit. Your refund has been issued.", placedDate: "05 October 2026", total: 1299.00, shipTo: "rishika agrawal", refundQuestion: "When will I get my refund?", refundAnswer: "Refunds are typically processed within 5–7 business days after the returned item is received at our warehouse.", items: [{ name: "20 Stage Shower Head and Tap Filter", img: photo("shower-filter") }] },
-  { id: "ORD-7690", status: "Delivered", statusDate: "15 November", statusSub: "Package was handed to resident", placedDate: "10 November 2026", total: 89.00, shipTo: "rishika agrawal", returnWindow: "25 November 2026", items: [{ name: "Mint Toothpaste | Fresh Breath Formula | 150g Tube", img: photo("toothpaste") }] }
-];
-
-const myAddresses = [
-  { tag: "HOME", name: "Rishika Agrawal", phone: "7697436551", line1: "42, 3rd Cross, Koramangala 4th Block", city: "Bengaluru, Karnataka 560034", default: true },
-  { tag: "OFFICE", name: "Rishika Agrawal", phone: "7697436551", line1: "Tech Park, 5th Floor, Whitefield", city: "Bengaluru, Karnataka 560066", default: false }
-];
-const myPrescriptions = [
-  { id: "RX-1024", date: "Oct 28, 2026", doctor: "Dr. Priya Menon", items: 3, img: "💊" },
-  { id: "RX-0987", date: "Sep 14, 2026", doctor: "Dr. Arun Kumar", items: 2, img: "🩺" }
-];
-const myGiftCards = [
-  { code: "KORN-KW76-9743", balance: 500, expires: "Dec 31, 2026" },
-  { code: "KORN-GIFT-2026", balance: 250, expires: "Jan 15, 2027" }
-];
+const myAddresses = [];
+const myPrescriptions = [];
+const myGiftCards = [];
 const faqs = [
-  { q: "How does 10-minute delivery work?", a: "We partner with local stores within 3 km of your location. Orders are packed and dispatched immediately via our delivery fleet." },
+  { q: "How does delivery work?", a: "Delivery availability and timing are not available in this demo." },
   { q: "What is the minimum order value?", a: "There is no minimum order value. You can order even a single item." },
-  { q: "How do I track my order?", a: "Go to My Account → My Orders. Each active order shows real-time tracking status." },
-  { q: "Can I return a product?", a: "Yes, perishable items can be returned within 2 hours of delivery if damaged or incorrect. Non-perishables within 7 days." },
-  { q: "How do I upload a prescription?", a: "Go to My Account → My Prescriptions → Upload New. Take a clear photo of your doctor's prescription." }
+  { q: "How do I track my order?", a: "Real-time tracking is not available in this demo. A successful checkout shows its order ID." },
+  { q: "Can I return a product?", a: "Returns are not available in this demo." },
+  { q: "How do I upload a prescription?", a: "Prescription uploads are not available in this demo." }
 ];
 
 /* ========== HELPERS ========== */
 function getProduct(id){ return products.find(p=>p.id===id); }
 function getStore(id){ return stores.find(s=>s.id===id); }
 function getQty(id){ const c=cart.find(x=>x.id===id); return c?c.qty:0; }
-function discOf(p){ return Math.round((p.mrp-p.price)/p.mrp*100); }
-function stars(r){ const f=Math.round(r); return "★★★★★".slice(0,f)+"☆☆☆☆☆".slice(0,5-f); }
-function gstOf(amount){ return amount*0.05; }
 function ckStepper(id,qty){ return `<div class="ck-stepper"><button onclick="changeQty(${id},-1)" aria-label="Decrease quantity">−</button><span>${qty}</span><button onclick="changeQty(${id},1)" aria-label="Increase quantity">+</button></div>`; }
 function stepper(id,qty){ return `<div class="qty-ctrl"><button onclick="changeQty(${id},-1)">−</button><span>${qty}</span><button onclick="changeQty(${id},1)">+</button></div>`; }
-function qtyControl(id){ const q=getQty(id); return q===0?`<button class="add-outline" onclick="changeQty(${id},1)">ADD</button>`:stepper(id,q); }
-function overlayControl(id){ const q=getQty(id); return q===0?`<button class="plus-btn" onclick="changeQty(${id},1)">+</button>`:stepper(id,q); }
+function qtyControl(id){ const q=getQty(id), p=getProduct(id); return q===0?`<button class="add-outline" ${p?.stock===0?"disabled":""} onclick="changeQty(${id},1)">${p?.stock===0?"OUT OF STOCK":"ADD"}</button>`:stepper(id,q); }
+function overlayControl(id){ const q=getQty(id), p=getProduct(id); return q===0?`<button class="plus-btn" ${p?.stock===0?"disabled":""} aria-label="Add ${escapeHtml(p?.name||"product")}" onclick="changeQty(${id},1)">${p?.stock===0?"OUT":"+"}</button>`:stepper(id,q); }
 
 /* ========== HOMEPAGE ========== */
 function renderCategories(){
@@ -789,20 +738,28 @@ function renderCategories(){
 }
 function renderStores(){
   document.getElementById("storeRow").innerHTML = stores.map(s=>`
-    <button class="card store" onclick="openStore(${s.id})">
-      <div class="card-img">${img(s.img,s.name)}</div><div class="card-name">${s.name}</div>
-      <span class="badge">${s.time}</span>
+    <button class="card store" onclick="openStore(${Number(s.id)})">
+      <div class="card-img">${img(s.img,escapeHtml(s.name))}</div><div class="card-name">${escapeHtml(s.name)}</div>
+      <span class="badge">${escapeHtml(s.locality || "Local seller")}</span>
     </button>`).join("");
 }
 function renderShopSections(){
   const text=viewText.trim().toLowerCase();
-  const list=products.filter(p=>(viewScope===null||p.cat===viewScope)&&(p.name.toLowerCase().includes(text)||getStore(p.storeId).name.toLowerCase().includes(text)));
+  if(text && searchResults===null){
+    document.getElementById("shopSections").innerHTML = searchError
+      ? `<p class="cart-empty">${escapeHtml(searchError)}</p>`
+      : "<p class='cart-empty'>Searching products…</p>";
+    return;
+  }
+  const source=text ? searchResults : products;
+  const list=source.filter(p=>(viewScope===null||p.cat===viewScope)&&
+    (text || p.name.toLowerCase().includes(text) || (getStore(p.storeId)?.name || "").toLowerCase().includes(text)));
   let html="";
   stores.forEach(s=>{
     const items=list.filter(p=>p.storeId===s.id);
     if(!items.length) return;
-    html+=`<div class="shop-section"><div class="shop-header">${img(s.img,s.name,"shop-logo")}<div><div class="shop-title">${s.name}</div><div class="shop-meta"><span class="rating">★ ${s.rating}</span> • ${s.time} • ${s.km} km</div></div></div><div class="shop-products">${items.map(p=>`
-      <div class="p-card"><div class="p-img">${img(p.img,p.name)}<div class="p-ctrl">${overlayControl(p.id)}</div></div><div class="p-name">${p.name}</div><div class="p-unit">${p.unit}</div><div class="p-price">₹${p.price}</div></div>`).join("")}</div></div>`;
+    html+=`<div class="shop-section"><div class="shop-header">${img(s.img,escapeHtml(s.name),"shop-logo")}<div><div class="shop-title">${escapeHtml(s.name)}</div><div class="shop-meta">${escapeHtml([s.locality,s.address].filter(Boolean).join(", ") || "Local seller")}</div></div></div><div class="shop-products">${items.map(p=>`
+      <div class="p-card"><div class="p-img">${img(p.img,escapeHtml(p.name))}<div class="p-ctrl">${overlayControl(p.id)}</div></div><div class="p-name">${escapeHtml(p.name)}</div><div class="p-unit">${escapeHtml(p.unit)}</div><div class="p-price">${money(p.pricePaise)}</div>${p.stock===0?"<small>Out of stock</small>":""}</div>`).join("")}</div></div>`;
   });
   document.getElementById("shopSections").innerHTML = html || "<p class='cart-empty'>No products or shops found.</p>";
 }
@@ -817,7 +774,7 @@ function setActiveLink(id){
 }
 function showHome(e){
   if(e) e.preventDefault();
-  viewOpen=false; viewScope=null; viewText="";
+  viewOpen=false; viewScope=null; viewText=""; searchResults=null; searchError="";
   document.getElementById("searchInput").value="";
   document.getElementById("viewSearch").value="";
   hideAllViews();
@@ -832,14 +789,48 @@ function showNearbyStores(e){
   renderStoresGrid();
 }
 function showCategory(catId){
-  viewScope=catId; viewText="";
+  viewScope=products.some(p=>p.cat===catId)?catId:null; viewText=""; searchResults=null; searchError="";
   document.getElementById("viewSearch").value="";
   document.getElementById("searchInput").value="";
   hideAllViews();
   document.getElementById("productView").classList.remove("hidden");
-  document.getElementById("productViewTitle").textContent=categories.find(c=>c.id===catId).name;
+  document.getElementById("productViewTitle").textContent=viewScope
+    ? (categories.find(c=>c.id===catId)?.name || "Products")
+    : "Available products";
   viewOpen=true; renderShopSections();
   setActiveLink("homeLink");
+}
+function requestProductSearch(text){
+  clearTimeout(searchTimer);
+  const requestId=++searchRequest;
+  searchResults=null; searchError="";
+  if(!text.trim()){ renderShopSections(); return; }
+  renderShopSections();
+  searchTimer=setTimeout(async()=>{
+    try{
+      const response=await fetch(apiUrl("/api/search?q="+encodeURIComponent(text.trim())));
+      const data=await response.json();
+      if(!response.ok||!data.success||!Array.isArray(data.products)){
+        throw new Error(data.message||"Search is temporarily unavailable.");
+      }
+      if(requestId!==searchRequest) return;
+      searchResults=data.products.map(item=>{
+        const product=products.find(p=>p.id===Number(item.id));
+        if(!product) return null;
+        if(Number.isSafeInteger(Number(item.pricePaise))&&Number(item.pricePaise)>=0){
+          product.pricePaise=Number(item.pricePaise);
+          product.price=Number(item.pricePaise)/100;
+        }
+        if(Number.isSafeInteger(Number(item.stock))&&Number(item.stock)>=0) product.stock=Number(item.stock);
+        return product;
+      }).filter(Boolean);
+    }catch(error){
+      if(requestId!==searchRequest) return;
+      searchResults=null;
+      searchError=error.message||"Search is temporarily unavailable.";
+    }
+    renderShopSections();
+  },250);
 }
 function handleNavSearch(){
   const text=document.getElementById("searchInput").value.trim();
@@ -849,25 +840,39 @@ function handleNavSearch(){
   hideAllViews();
   document.getElementById("productView").classList.remove("hidden");
   document.getElementById("productViewTitle").textContent="Search results";
-  viewOpen=true; renderShopSections();
+  viewOpen=true; requestProductSearch(text);
 }
-function handleViewSearch(){ viewText=document.getElementById("viewSearch").value; renderShopSections(); }
+function handleViewSearch(){
+  viewText=document.getElementById("viewSearch").value.trim();
+  document.getElementById("searchInput").value=viewText;
+  if(!viewText){ searchResults=null; searchError=""; renderShopSections(); return; }
+  requestProductSearch(viewText);
+}
 
 /* ========== STORE MODAL ========== */
 function openStore(id){
   openStoreId=id; const s=getStore(id);
+  if(!s) return;
   const rows=products.filter(p=>p.storeId===id).map(p=>`
-    <div class="modal-row"><div class="left">${img(p.img,p.name,"thumb")}<span>${p.name}<br><small>${p.unit} · ₹${p.price}</small></span></div>${qtyControl(p.id)}</div>`).join("");
-  document.getElementById("modalContent").innerHTML=`<h2>${s.name}</h2><span class="badge">${s.time}</span>${rows||"<p class='cart-empty'>No items yet.</p>"}`;
+    <div class="modal-row"><div class="left">${img(p.img,escapeHtml(p.name),"thumb")}<span>${escapeHtml(p.name)}<br><small>${escapeHtml(p.unit)} · ${money(p.pricePaise)} · ${p.stock} in stock</small></span></div>${qtyControl(p.id)}</div>`).join("");
+  document.getElementById("modalContent").innerHTML=`<h2>${escapeHtml(s.name)}</h2><span class="badge">${escapeHtml(s.locality||"Local seller")}</span>${rows||"<p class='cart-empty'>No products available.</p>"}`;
   document.getElementById("modal").classList.add("open");
 }
 function closeModal(){ openStoreId=null; document.getElementById("modal").classList.remove("open"); }
 
 /* ========== CART ========== */
 function changeQty(id,delta){
+  const product=getProduct(id);
+  if(!product) return;
   const item=cart.find(c=>c.id===id);
-  if(item){ item.qty+=delta; }
-  else if(delta>0){ cart.push({id,qty:1}); }
+  const quantity=(item?.qty||0)+delta;
+  if(quantity<0) return;
+  if(quantity>product.stock){
+    alert(product.stock===0?"This product is out of stock.":`Only ${product.stock} available.`);
+    return;
+  }
+  if(item){ item.qty=quantity; }
+  else if(quantity>0){ cart.push({id,qty:quantity}); }
   cart=cart.filter(c=>c.qty>0);
   refreshAll();
 }
@@ -881,13 +886,13 @@ function refreshAll(){
 }
 function renderCart(){
   const box=document.getElementById("cartItems");
-  let total=0,count=0;
+  let totalPaise=0,count=0;
   if(!cart.length){ box.innerHTML="<p class='cart-empty'>Your cart is empty.</p>"; }
   else{
-    box.innerHTML=cart.map(c=>{ const p=getProduct(c.id); total+=p.price*c.qty; count+=c.qty; return `
-      <div class="cart-item"><div class="cart-info">${img(p.img,p.name,"thumb")}<span>${p.name}<small>${getStore(p.storeId).name}</small><small>₹${p.price} × ${c.qty} = ₹${p.price*c.qty}</small></span></div>${stepper(c.id,c.qty)}</div>`; }).join("");
+    box.innerHTML=cart.map(c=>{ const p=getProduct(c.id); if(!p) return ""; totalPaise+=p.pricePaise*c.qty; count+=c.qty; return `
+      <div class="cart-item"><div class="cart-info">${img(p.img,escapeHtml(p.name),"thumb")}<span>${escapeHtml(p.name)}<small>${escapeHtml(getStore(p.storeId)?.name||"")}</small><small>${money(p.pricePaise)} × ${c.qty} = ${money(p.pricePaise*c.qty)}</small></span></div>${stepper(c.id,c.qty)}</div>`; }).join("");
   }
-  document.getElementById("cartTotal").textContent="₹"+total;
+  document.getElementById("cartTotal").textContent=money(totalPaise);
   document.getElementById("navCartCount").textContent=count;
 }
 
@@ -897,26 +902,22 @@ function closeCheckout(){ document.getElementById("checkoutView").classList.add(
 function renderCheckout(){
   const byStore = {};
   cart.forEach(c=>{ const p=getProduct(c.id); if(!byStore[p.storeId]) byStore[p.storeId]=[]; byStore[p.storeId].push({...p,qty:c.qty}); });
-  let productListHtml="", totalMrp=0, totalSelling=0, totalItems=0;
+  let productListHtml="", totalPaise=0, totalItems=0;
   Object.keys(byStore).forEach(storeId=>{
     const store=getStore(parseInt(storeId));
     byStore[storeId].forEach(item=>{
-      const lineMrp=item.mrp*item.qty, lineSell=item.price*item.qty, gst=gstOf(lineSell);
-      totalMrp+=lineMrp; totalSelling+=lineSell; totalItems+=item.qty;
-      productListHtml+=`<div class="ck-product"><div class="ck-product-img">${img(item.img,item.name)}</div><div class="ck-product-info"><div class="ck-product-name">${item.name}</div><div class="ck-product-shop">🏪 ${store.name}</div><div class="ck-product-unit">${item.unit} · Qty: ${item.qty}</div><div class="ck-product-price"><span class="price">₹${lineSell}</span><span class="mrp">₹${lineMrp}</span><span class="gst">+ ₹${gst.toFixed(2)} GST</span></div></div>${ckStepper(item.id,item.qty)}</div>`;
+      const linePaise=item.pricePaise*item.qty;
+      totalPaise+=linePaise; totalItems+=item.qty;
+      productListHtml+=`<div class="ck-product"><div class="ck-product-img">${img(item.img,escapeHtml(item.name))}</div><div class="ck-product-info"><div class="ck-product-name">${escapeHtml(item.name)}</div><div class="ck-product-shop">🏪 ${escapeHtml(store.name)}</div><div class="ck-product-unit">${escapeHtml(item.unit)} · Qty: ${item.qty}</div><div class="ck-product-price"><span class="price">${money(linePaise)}</span></div></div>${ckStepper(item.id,item.qty)}</div>`;
     });
   });
   document.getElementById("ckProductList").innerHTML = productListHtml || "<p class='cart-empty' style='padding:30px'>Your cart is empty.</p>";
   document.getElementById("ckItemCount").textContent = `${totalItems} item${totalItems!==1?'s':''}`;
-  const savings=totalMrp-totalSelling, deliveryCharge=totalSelling>199?0:35, handlingCharge=8, smallCartCharge=totalSelling<150?25:0, gstTotal=gstOf(totalSelling), grandTotal=Math.round(totalSelling+deliveryCharge+handlingCharge+smallCartCharge+gstTotal);
+  const grandTotal=money(totalPaise);
   document.getElementById("ckBillRows").innerHTML=`
-    <div class="bill-row"><div class="label"><span class="icon">🧾</span>Items total<span class="saved">Saved ₹${savings}</span></div><div class="value"><span class="mrp">₹${totalMrp}</span>₹${totalSelling}</div></div>
-    <div class="bill-row"><div class="label"><span class="icon">🛵</span>Delivery charge<span class="info" title="Free above ₹199">i</span></div><div class="value">${deliveryCharge===0?'<span style="color:#15803d;font-weight:700">FREE</span>':'₹'+deliveryCharge}</div></div>
-    <div class="bill-row"><div class="label"><span class="icon">🛍️</span>Handling charge<span class="info" title="Packaging fee">i</span></div><div class="value">₹${handlingCharge}</div></div>
-    <div class="bill-row"><div class="label"><span class="icon">🛒</span>Small cart charge<span class="info" title="On orders below ₹150">i</span></div><div class="value">${smallCartCharge===0?'<span style="color:#15803d;font-weight:700">₹0</span>':'₹'+smallCartCharge}</div></div>
-    <div class="bill-row"><div class="label"><span class="icon">📋</span>GST (5%)<span class="info" title="GST">i</span></div><div class="value">₹${gstTotal.toFixed(2)}</div></div>
-    <div class="bill-row grand"><div class="label">Grand total<span class="info" title="Final amount">i</span></div><div class="value">₹${grandTotal}</div></div>`;
-  document.getElementById("ckSavings").textContent="₹"+savings;
+    <div class="bill-row"><div class="label"><span class="icon">🧾</span>Items total</div><div class="value">${grandTotal}</div></div>
+    <div class="bill-row grand"><div class="label">Total (confirmed at checkout)</div><div class="value">${grandTotal}</div></div>`;
+  document.getElementById("ckSavings").textContent="Shown prices; no extra fees";
 }
 
 /* ========== PROCEED / PAYMENT & DELIVERY MODE SELECTION ========== */
@@ -938,29 +939,24 @@ function renderProceedSummary(){
   let itemsHtml = "";
   Object.keys(byStore).forEach(storeId=>{
     const store = getStore(parseInt(storeId));
-    itemsHtml += `<div style="font-size:13px;font-weight:700;color:#15803d;margin:10px 0 4px">🏪 ${store.name}</div>`;
+    itemsHtml += `<div style="font-size:13px;font-weight:700;color:#15803d;margin:10px 0 4px">🏪 ${escapeHtml(store.name)}</div>`;
     byStore[storeId].forEach(item=>{
       itemsHtml += `<div class="ps-item">
-        <div class="ps-img">${img(item.img,item.name)}</div>
+        <div class="ps-img">${img(item.img,escapeHtml(item.name))}</div>
         <div style="flex:1;min-width:0">
-          <div class="ps-name">${item.name}</div>
-          <div class="ps-meta">${item.unit} · ₹${item.price} × ${item.qty}</div>
+          <div class="ps-name">${escapeHtml(item.name)}</div>
+          <div class="ps-meta">${escapeHtml(item.unit)} · ${money(item.pricePaise)} × ${item.qty}</div>
         </div>
-        <div class="ps-qty">₹${item.price*item.qty}</div>
+        <div class="ps-qty">${money(item.pricePaise*item.qty)}</div>
       </div>`;
     });
   });
   document.getElementById("proceedSummaryItems").innerHTML = itemsHtml;
 
-  let totalMrp=0, totalSelling=0;
-  cart.forEach(c=>{ const p=getProduct(c.id); totalMrp+=p.mrp*c.qty; totalSelling+=p.price*c.qty; });
-  const savings=totalMrp-totalSelling, deliveryCharge=totalSelling>199?0:35, handlingCharge=8, smallCartCharge=totalSelling<150?25:0, gstTotal=gstOf(totalSelling), grandTotal=Math.round(totalSelling+deliveryCharge+handlingCharge+smallCartCharge+gstTotal);
+  const totalPaise=cart.reduce((sum,c)=>sum+getProduct(c.id).pricePaise*c.qty,0);
   document.getElementById("proceedSummaryBill").innerHTML=`
-    <div class="delivery-row"><div class="dr-label">Items total</div><div class="dr-value"><span style="text-decoration:line-through;color:#94a3b8;margin-right:6px">₹${totalMrp}</span>₹${totalSelling} <span style="background:#dbeafe;color:#1d4ed8;font-size:11px;padding:2px 6px;border-radius:10px;margin-left:6px">Saved ₹${savings}</span></div></div>
-    <div class="delivery-row"><div class="dr-label">Delivery charge</div><div class="dr-value">${deliveryCharge===0?'<span style="color:#15803d">FREE</span>':'₹'+deliveryCharge}</div></div>
-    <div class="delivery-row"><div class="dr-label">Handling + Small cart</div><div class="dr-value">₹${handlingCharge+smallCartCharge}</div></div>
-    <div class="delivery-row"><div class="dr-label">GST (5%)</div><div class="dr-value">₹${gstTotal.toFixed(2)}</div></div>
-    <div class="delivery-row" style="border-top:1px dashed #e2e8f0;margin-top:6px;padding-top:10px;font-weight:800;font-size:16px"><div class="dr-label">Grand total</div><div class="dr-value" style="font-size:18px">₹${grandTotal}</div></div>`;
+    <div class="delivery-row"><div class="dr-label">Items total (server confirms)</div><div class="dr-value">${money(totalPaise)}</div></div>
+    <div class="delivery-row" style="border-top:1px dashed #e2e8f0;margin-top:6px;padding-top:10px;font-weight:800;font-size:16px"><div class="dr-label">Total</div><div class="dr-value" style="font-size:18px">${money(totalPaise)}</div></div>`;
 }
 
 // UPDATED: selectMode now just highlights the choice, it doesn't auto-redirect
@@ -968,100 +964,125 @@ function selectMode(mode){
   selectedDeliveryMode = mode;
   document.getElementById("modePickup").classList.toggle("selected", mode==="pickup");
   document.getElementById("modeDelivery").classList.toggle("selected", mode==="delivery");
+  document.getElementById("deliveryAddressLabel").classList.toggle("hidden", mode!=="delivery");
+  document.getElementById("deliveryAddress").classList.toggle("hidden", mode!=="delivery");
+  document.getElementById("deliveryAddress").required=mode==="delivery";
 }
 
-// NEW: confirmOrder handles the payment simulation and THEN redirects
-function confirmOrder(button) {
+async function confirmOrder(button) {
   if (!selectedDeliveryMode) {
-    alert("Please select a fulfillment method (Pick up point or Delivery on gate).");
+    alert("Please select pickup or delivery.");
     return;
   }
-  const btn = button;
-  const originalText = btn.textContent;
-  btn.textContent = "Processing Payment...";
-  btn.disabled = true;
-
-  setTimeout(() => {
-    btn.textContent = originalText;
-    btn.disabled = false;
-    if (selectedDeliveryMode === "delivery") {
-      openDeliveryScreen();
-    } else {
-      openPickupScreen();
+  const customerName=document.getElementById("customerName").value.trim();
+  const customerPhone=document.getElementById("customerPhone").value.trim();
+  const deliveryAddress=document.getElementById("deliveryAddress").value.trim();
+  if(!customerName||!customerPhone||(selectedDeliveryMode==="delivery"&&!deliveryAddress)){
+    alert("Enter your name and phone number. A delivery address is also required for delivery.");
+    return;
+  }
+  if(!cart.length){ alert("Your cart is empty."); return; }
+  button.disabled=true;
+  const originalText=button.textContent;
+  button.textContent="Placing order…";
+  try{
+    const response=await fetch(apiUrl("/api/orders"),{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        customerName,
+        customerPhone,
+        fulfillmentType:selectedDeliveryMode,
+        deliveryAddress:selectedDeliveryMode==="delivery"?deliveryAddress:undefined,
+        items:cart.map(item=>({productId:item.id,quantity:item.qty}))
+      })
+    });
+    const data=await response.json();
+    if(!response.ok||!data.success||data.orderId===undefined||!Number.isSafeInteger(Number(data.totalPaise))){
+      throw new Error(data.message||"The order could not be placed.");
     }
-  }, 1500);
+    latestOrder={...data,fulfillmentType:selectedDeliveryMode,deliveryAddress,customerName,items:cart.map(item=>({...item}))};
+    myOrders.unshift({
+      id:String(data.orderId),
+      status:"Placed",
+      totalPaise:Number(data.totalPaise),
+      shipTo:customerName,
+      placedAt:data.createdAt,
+      items:cart.map(item=>({name:getProduct(item.id).name,img:getProduct(item.id).img}))
+    });
+    cart.forEach(item=>{
+      const product=getProduct(item.id);
+      if(product) product.stock=Math.max(0,product.stock-item.qty);
+    });
+    cart=[];
+    renderCart();
+    renderStores();
+    renderStoresGrid();
+    if(selectedDeliveryMode==="delivery") openDeliveryScreen(latestOrder);
+    else openPickupScreen(latestOrder);
+  }catch(error){
+    alert(error.message||"Unable to place order. Please try again.");
+  }finally{
+    button.disabled=false;
+    button.textContent=originalText;
+  }
 }
 
-function openDeliveryScreen(){
+function openDeliveryScreen(order){
   hideAllViews();
   document.getElementById("deliveryView").classList.remove("hidden");
-  const total=cart.reduce((sum,c)=>sum+(getProduct(c.id)?.price||0)*c.qty,0);
-  const deliveryCharge=total>199?0:35;
-  const gst=gstOf(total);
-  const grandTotal=Math.round(total+deliveryCharge+8+(total<150?25:0)+gst);
   document.getElementById("deliveryScreen").innerHTML=`
     <div class="delivery-hero">
-      <div class="big-icon">🚪</div>
-      <h2>Delivery on gate</h2>
-      <div class="eta">Arriving in <strong>10 mins</strong></div>
+      <div class="big-icon">✓</div>
+      <h2>Order placed</h2>
+      <div class="eta">Order ID: <strong>${escapeHtml(order.orderId)}</strong></div>
     </div>
     <div class="delivery-card">
       <h4>📦 Order status</h4>
-      <div class="timeline">
-        <div class="tl-step done"><div class="tl-dot-col"><div class="tl-dot">✓</div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-title">Order confirmed</div><div class="tl-sub">Your order has been confirmed</div></div></div>
-        <div class="tl-step active"><div class="tl-dot-col"><div class="tl-dot">2</div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-title">Packing your items</div><div class="tl-sub">The nearest store is preparing your order</div></div></div>
-        <div class="tl-step"><div class="tl-dot-col"><div class="tl-dot">3</div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-title">Out for delivery</div><div class="tl-sub">Your delivery partner will arrive at the gate</div></div></div>
-        <div class="tl-step"><div class="tl-dot-col"><div class="tl-dot">4</div></div><div class="tl-content"><div class="tl-title">Delivered</div><div class="tl-sub">Delivery at Koramangala, 560034</div></div></div>
-      </div>
+      <p>Your order has been recorded. Seller fulfillment updates are not available in this demo.</p>
     </div>
     <div class="delivery-card">
-      <h4>💳 Payment summary</h4>
-      <div class="delivery-row"><span>Order total</span><span class="dr-value">₹${grandTotal}</span></div>
-      <div class="delivery-row"><span>Delivery address</span><span class="dr-value">Koramangala, 560034</span></div>
+      <h4>Order summary</h4>
+      <div class="delivery-row"><span>Order total</span><span class="dr-value">${money(Number(order.totalPaise))}</span></div>
+      <div class="delivery-row"><span>Delivery address</span><span class="dr-value">${escapeHtml(order.deliveryAddress)}</span></div>
     </div>`;
   window.scrollTo({top:0,behavior:"smooth"});
 }
-function closeDelivery(){ document.getElementById("deliveryView").classList.add("hidden"); document.getElementById("proceedView").classList.remove("hidden"); }
+function closeDelivery(){ document.getElementById("deliveryView").classList.add("hidden"); document.getElementById("homeView").classList.remove("hidden"); setActiveLink("homeLink"); }
 
-function openPickupScreen(){
+function openPickupScreen(order){
   hideAllViews();
   document.getElementById("pickupView").classList.remove("hidden");
-  const first=cart.length?getProduct(cart[0].id):null;
-  const store=first?getStore(first.storeId):stores[0];
   document.getElementById("pickupHero").innerHTML=`
-    <h2>🏪 Pick up point</h2>
-    <div class="sub">Your order will be ready for collection shortly</div>
-    <div class="pickup-store-box">
-      <div class="ps-name">${store.name}</div>
-      <div class="ps-addr">${allStores.find(s=>s.id===store.id)?.address||"Koramangala, Bengaluru"}</div>
-      <div class="ps-time">Ready in 10–15 mins</div>
-    </div>`;
+    <h2>✓ Order placed</h2>
+    <div class="sub">Order ID: ${escapeHtml(order.orderId)}.</div>`;
   document.getElementById("pickupItems").innerHTML=`
-    <h4>Items to collect</h4>
-    ${cart.map(c=>{
-      const p=getProduct(c.id);
-      return `<div class="pi-item"><div class="pi-img">${img(p.img,p.name)}</div><div class="pi-info"><div class="pi-name">${p.name}</div><div class="pi-shop">${getStore(p.storeId).name}</div></div><div class="pi-qty">Qty ${c.qty}</div></div>`;
+    <h4>Order total: ${money(Number(order.totalPaise))}</h4>
+    ${order.items.map(item=>{
+      const p=getProduct(item.id);
+      return `<div class="pi-item"><div class="pi-img">${img(p.img,escapeHtml(p.name))}</div><div class="pi-info"><div class="pi-name">${escapeHtml(p.name)}</div><div class="pi-shop">${escapeHtml(getStore(p.storeId)?.name||"")}</div></div><div class="pi-qty">Qty ${item.qty}</div></div>`;
     }).join("")}`;
-  document.getElementById("pickupInstructions").innerHTML=`<span class="pi-icon">ℹ️</span><span>Keep your order details handy when you reach the store. Collection usually takes 10–15 minutes.</span>`;
+  document.getElementById("pickupInstructions").innerHTML=`<span class="pi-icon">ℹ️</span><span>Items may be fulfilled by different sellers. Pickup readiness is not tracked by this demo.</span>`;
   window.scrollTo({top:0,behavior:"smooth"});
 }
-function closePickup(){ document.getElementById("pickupView").classList.add("hidden"); document.getElementById("proceedView").classList.remove("hidden"); }
+function closePickup(){ document.getElementById("pickupView").classList.add("hidden"); document.getElementById("homeView").classList.remove("hidden"); setActiveLink("homeLink"); }
 
 /* ========== SHOP DETAIL PAGE ========== */
 function openShopDetail(id){
   currentShopId=id;
   const s=getStore(id);
+  if(!s) return;
   const list=products.filter(p=>p.storeId===id);
   const min=list.length?Math.min(...list.map(p=>p.price)):0;
   const max=list.length?Math.max(...list.map(p=>p.price)):100;
-  priceBounds=[Math.floor(min/10)*10, Math.ceil(max/10)*10];
-  shopFilter={ brands:new Set(), review:"all", priceMin:priceBounds[0], priceMax:priceBounds[1], discMin:0, discMax:90, chip:"all", brandsExpanded:false };
+  priceBounds=[Math.floor(min/10)*10, Math.max(Math.ceil(max/10)*10,Math.floor(min/10)*10+10)];
+  shopFilter={ brands:new Set(), priceMin:priceBounds[0], priceMax:priceBounds[1], chip:"all", brandsExpanded:false };
   document.getElementById("sortSelect").value="popularity";
 
   document.getElementById("shopPageHeader").innerHTML=`
-    ${img(s.img,s.name,"shop-logo")}
-    <div><div class="sph-name">${s.name}</div>
-    <div class="sph-meta"><span class="rating">★ ${s.rating}</span> • ${s.time} • ${s.km} km • ${allStores.find(x=>x.id===id)?.address||"Bengaluru"}</div></div>`;
+    ${img(s.img,escapeHtml(s.name),"shop-logo")}
+    <div><div class="sph-name">${escapeHtml(s.name)}</div>
+    <div class="sph-meta">${escapeHtml([s.locality,s.address].filter(Boolean).join(", ")||"Local seller")}</div></div>`;
 
   hideAllViews();
   document.getElementById("shopView").classList.remove("hidden");
@@ -1074,12 +1095,8 @@ function closeShopDetail(){
   document.getElementById("nearbyView").classList.remove("hidden");
 }
 function renderChipRow(){
-  const shopProds=products.filter(p=>p.storeId===currentShopId);
-  const cats=[...new Set(shopProds.map(p=>p.cat))];
-  let html=`<button class="chip ${shopFilter.chip==="all"?"active":""}" onclick="setChip('all')">Browse more</button>`;
-  dealChips.forEach(d=>{ html+=`<button class="chip ${shopFilter.chip==="tag:"+d.k?"active":""}" onclick="setChip('tag:${d.k}')">${d.label}</button>`; });
-  cats.forEach(c=>{ html+=`<button class="chip ${shopFilter.chip==="cat:"+c?"active":""}" onclick="setChip('cat:${c}')">${catNames[c]||c}</button>`; });
-  document.getElementById("chipRow").innerHTML=html;
+  document.getElementById("chipRow").innerHTML=
+    `<button class="chip active" onclick="setChip('all')">All available products</button>`;
 }
 function setChip(c){ shopFilter.chip=c; renderChipRow(); renderFilterPanel(); renderShopProducts(); }
 function scrollChips(dir){ document.getElementById("chipRow").scrollBy({left:dir*240,behavior:"smooth"}); }
@@ -1096,36 +1113,27 @@ function renderFilterPanel(){
   const brands=[...new Set(shopProds.map(p=>p.brand))].sort();
   const shown=f.brandsExpanded?brands:brands.slice(0,4);
   let chips=`<button class="fp-chip" onclick="document.getElementById('chipRow').scrollIntoView({behavior:'smooth'})">Browse more</button>`;
-  f.brands.forEach(b=>chips+=`<button class="fp-chip removable" onclick="toggleBrand('${b}')">${b} ✕</button>`);
-  if(f.review==="4") chips+=`<button class="fp-chip removable" onclick="setReview('all')">4★ &amp; up ✕</button>`;
-  if(f.chip!=="all"){ const lbl=f.chip.startsWith("tag:")?dealChips.find(d=>d.k===f.chip.slice(4)).label:(catNames[f.chip.slice(4)]||f.chip); chips+=`<button class="fp-chip removable" onclick="setChip('all')">${lbl} ✕</button>`; }
+  f.brands.forEach(b=>chips+=`<button class="fp-chip removable" onclick="toggleBrand('${escapeHtml(b)}')">${escapeHtml(b)} ✕</button>`);
   if(f.priceMin!==priceBounds[0]||f.priceMax!==priceBounds[1]) chips+=`<button class="fp-chip removable" onclick="resetPrice()">₹${f.priceMin}–₹${f.priceMax} ✕</button>`;
-  if(f.discMin!==0||f.discMax!==90) chips+=`<button class="fp-chip removable" onclick="resetDisc()">${f.discMin}%–${f.discMax}% ✕</button>`;
   document.getElementById("filterPanel").innerHTML=`
     <div class="fp-title">Filtered by</div>
     <div class="fp-chips">${chips}</div>
     <span class="clear-filters" onclick="clearFilters()">Clear Filters</span>
-    <div class="fp-title">Brands</div>
-    ${shown.map(b=>`<label class="fp-check"><input type="checkbox" ${f.brands.has(b)?"checked":""} onchange="toggleBrand('${b}')"> ${b}</label>`).join("")}
+    <div class="fp-title">Seller</div>
+    ${shown.map(b=>`<label class="fp-check"><input type="checkbox" ${f.brands.has(b)?"checked":""} onchange="toggleBrand('${escapeHtml(b)}')"> ${escapeHtml(b)}</label>`).join("")}
     ${brands.length>4?`<span class="see-more" onclick="toggleBrandsMore()">${f.brandsExpanded?"⌃ See less":"⌄ See more"}</span>`:""}
-    <div class="fp-title">Customer Reviews</div>
-    <label class="fp-check"><input type="radio" name="rev" ${f.review==="all"?"checked":""} onchange="setReview('all')"> All</label>
-    <label class="fp-check"><input type="radio" name="rev" ${f.review==="4"?"checked":""} onchange="setReview('4')"> <span style="color:#f59e0b">★★★★☆</span> and up</label>
     <div class="fp-title">Price</div>
     <div class="fp-value" id="price-label">₹${f.priceMin} – ₹${f.priceMax}</div>
     ${rangeGroup("price",priceBounds[0],priceBounds[1],f.priceMin,f.priceMax)}
-    <div class="fp-title">Discount</div>
-    <div class="fp-value" id="disc-label">${f.discMin}% – ${f.discMax}%</div>
-    ${rangeGroup("disc",0,90,f.discMin,f.discMax)}
   `;
-  updateFill("price"); updateFill("disc");
+  updateFill("price");
 }
 function onRange(key){
   const lo=document.getElementById(key+"-min"), hi=document.getElementById(key+"-max");
   let a=+lo.value, b=+hi.value;
   if(a>b){ if(document.activeElement===lo) hi.value=a, b=a; else lo.value=b, a=b; }
-  if(key==="price"){ shopFilter.priceMin=a; shopFilter.priceMax=b; document.getElementById("price-label").textContent=`₹${a} – ₹${b}`; }
-  else{ shopFilter.discMin=a; shopFilter.discMax=b; document.getElementById("disc-label").textContent=`${a}% – ${b}%`; }
+  shopFilter.priceMin=a; shopFilter.priceMax=b;
+  document.getElementById("price-label").textContent=`₹${a} – ₹${b}`;
   updateFill(key); renderShopProducts();
 }
 function updateFill(key){
@@ -1137,59 +1145,54 @@ function updateFill(key){
 }
 function toggleBrand(b){ shopFilter.brands.has(b)?shopFilter.brands.delete(b):shopFilter.brands.add(b); renderFilterPanel(); renderShopProducts(); }
 function toggleBrandsMore(){ shopFilter.brandsExpanded=!shopFilter.brandsExpanded; renderFilterPanel(); }
-function setReview(v){ shopFilter.review=v; renderFilterPanel(); renderShopProducts(); }
 function resetPrice(){ shopFilter.priceMin=priceBounds[0]; shopFilter.priceMax=priceBounds[1]; renderFilterPanel(); renderShopProducts(); }
-function resetDisc(){ shopFilter.discMin=0; shopFilter.discMax=90; renderFilterPanel(); renderShopProducts(); }
 function clearFilters(){
-  shopFilter={ brands:new Set(), review:"all", priceMin:priceBounds[0], priceMax:priceBounds[1], discMin:0, discMax:90, chip:"all", brandsExpanded:false };
+  shopFilter={ brands:new Set(), priceMin:priceBounds[0], priceMax:priceBounds[1], chip:"all", brandsExpanded:false };
   renderChipRow(); renderFilterPanel(); renderShopProducts();
 }
 function renderShopProducts(){
   if(currentShopId===null) return;
   const f=shopFilter;
   let list=products.filter(p=>p.storeId===currentShopId);
-  if(f.chip!=="all"){
-    if(f.chip.startsWith("tag:")) list=list.filter(p=>p.tags.includes(f.chip.slice(4)));
-    else list=list.filter(p=>p.cat===f.chip.slice(4));
-  }
   if(f.brands.size) list=list.filter(p=>f.brands.has(p.brand));
-  if(f.review==="4") list=list.filter(p=>p.rating>=4);
   list=list.filter(p=>p.price>=f.priceMin&&p.price<=f.priceMax);
-  list=list.filter(p=>discOf(p)>=f.discMin&&discOf(p)<=f.discMax);
   const sort=document.getElementById("sortSelect").value;
   if(sort==="price-asc") list.sort((a,b)=>a.price-b.price);
   else if(sort==="price-desc") list.sort((a,b)=>b.price-a.price);
-  else if(sort==="rating") list.sort((a,b)=>b.rating-a.rating);
-  else if(sort==="discount") list.sort((a,b)=>discOf(b)-discOf(a));
-  else list.sort((a,b)=>b.reviews-a.reviews);
+  else list.sort((a,b)=>a.name.localeCompare(b.name));
   document.getElementById("resultCount").textContent=`${list.length} product${list.length!==1?"s":""} found`;
   document.getElementById("shopProductGrid").innerHTML = list.length ? list.map(p=>`
     <div class="g-card">
-      <div class="g-img">${img(p.img,p.name)}${discOf(p)>0?`<span class="g-disc">${discOf(p)}% OFF</span>`:""}</div>
-      <div class="g-name">${p.name}</div>
-      <div class="g-brand">${p.brand} · ${p.unit}</div>
-      <div class="g-stars">${stars(p.rating)} <small>${p.rating} (${p.reviews})</small></div>
-      <div class="g-price-row"><span class="g-price">₹${p.price}</span><span class="g-mrp">₹${p.mrp}</span></div>
+      <div class="g-img">${img(p.img,escapeHtml(p.name))}</div>
+      <div class="g-name">${escapeHtml(p.name)}</div>
+      <div class="g-brand">${escapeHtml(p.brand)} · ${escapeHtml(p.unit)}</div>
+      <div class="g-price-row"><span class="g-price">${money(p.pricePaise)}</span></div>
+      <div>${p.stock>0?`${p.stock} in stock`:"Out of stock"}</div>
       <div class="g-actions">${qtyControl(p.id)}</div>
     </div>`).join("")
     : "<p class='cart-empty'>No products match your filters. Try Clear Filters.</p>";
 }
 
 /* ========== NEARBY STORES DASHBOARD ========== */
-let allStores = stores.map((s,i)=>({
-  id:s.id, name:s.name,
-  category:["Grocery","Organic Food","Pharmacy","Dairy & Bakery","Supermarket","Fast Food"][i],
-  address:["Koramangala, Bengaluru","Indiranagar, Bengaluru","HSR Layout, Bengaluru","Whitefield, Bengaluru","Jayanagar, Bengaluru","MG Road, Bengaluru"][i],
-  time:s.time,
-  color:["#e8f5e9","#f3e5f5","#e3f2fd","#fff3e0","#ede7f6","#e0f2f1"][i]
-}));
+let allStores = [];
+const _storeColors = ["#e8f5e9","#f3e5f5","#e3f2fd","#fff3e0","#ede7f6","#e0f2f1"];
+function buildAllStores() {
+  allStores = stores.map(function(s, i) {
+    return {
+      id:       s.id,
+      name:     s.name,
+      category: "Local Store",
+      address:  s.locality ? (s.locality + (s.address ? ", " + s.address : "")) : "Bengaluru",
+      color:    _storeColors[i % _storeColors.length]
+    };
+  });
+}
 function storeCardHTML(store){
   const count=products.filter(p=>p.storeId===store.id).length;
-  return `<div class="store-box" style="background-color:${store.color};">${store.name}</div>
-    <div class="store-info"><h4>${store.name}</h4>
-    <p class="store-category">${store.category}</p>
-    <p class="store-address">📍 ${store.address}</p>
-    <span class="delivery-time">⚡ ${store.time}</span>
+  return `<div class="store-box" style="background-color:${store.color};">${escapeHtml(store.name)}</div>
+    <div class="store-info"><h4>${escapeHtml(store.name)}</h4>
+    <p class="store-category">${escapeHtml(store.category)}</p>
+    <p class="store-address">📍 ${escapeHtml(store.address)}</p>
     <span class="store-view-hint">View products (${count}) →</span></div>`;
 }
 function renderStoresGrid(){
@@ -1217,22 +1220,10 @@ function filterStores(){
 function sortStores(){
   const s=document.getElementById("sortBy").value;
   if(s==="name") allStores.sort((a,b)=>a.name.localeCompare(b.name));
-  else if(s==="time") allStores.sort((a,b)=>parseInt(a.time)-parseInt(b.time));
   renderStoresGrid();
 }
 function addNewStore(){
-  const name=document.getElementById("storeName").value.trim();
-  const category=document.getElementById("storeCategory").value.trim();
-  const address=document.getElementById("storeAddress").value.trim();
-  const time=document.getElementById("deliveryTime").value.trim();
-  const color=document.getElementById("storeColor").value;
-  if(!name||!time){ alert("Please fill in at least Store Name and Delivery Time!"); return; }
-  const newId=allStores.length?Math.max(...allStores.map(s=>s.id))+1:1;
-  allStores.push({id:newId,name,category:category||"General",address:address||"Bengaluru",time,color});
-  stores.push({id:newId,name,time,rating:4.0,km:2.0,img:photo("store-default")});
-  renderStoresGrid();
-  ["storeName","storeCategory","storeAddress","deliveryTime"].forEach(i=>document.getElementById(i).value="");
-  alert("Store added successfully!");
+  alert("Seller management is not available. This list shows sellers from the backend.");
 }
 
 /* ========== MY ACCOUNT DASHBOARD ========== */
@@ -1263,30 +1254,23 @@ function showAccountSub(section){
           html += `<div class="amz-order-top"><div class="status-head">Delivered ${o.statusDate}</div><div class="status-sub">${o.statusSub}</div></div>`;
         } else if(o.status==="Refunded"){
           html += `<div class="amz-order-top"><div class="status-head">Refunded</div><div class="status-sub refunded">${o.statusSub}</div></div>`;
+        } else {
+          html += `<div class="amz-order-top"><div class="status-head">Order placed</div><div class="status-sub">Order ID: ${escapeHtml(o.id)}</div></div>`;
         }
         o.items.forEach(item=>{
           html += `<div class="amz-order-body">
-            <div class="amz-order-img">${img(item.img, item.name)}</div>
+            <div class="amz-order-img">${img(item.img, escapeHtml(item.name))}</div>
             <div class="amz-order-details">
-              <a class="amz-order-title">${item.name}</a>
+              <span class="amz-order-title">${escapeHtml(item.name)}</span>
               ${o.returnWindow?`<div class="amz-order-return">Return window closed on ${o.returnWindow}</div>`:""}
-              <button class="amz-buy-again" onclick="alert('Added to cart!')"><span class="icon">↻</span> Buy It Again</button>
             </div>
           </div>`;
         });
         html += `<div class="amz-order-bar">
-          <div class="amz-bar-col"><div class="label">ORDER PLACED</div><div class="value">${o.placedDate}</div></div>
-          <div class="amz-bar-col"><div class="label">TOTAL</div><div class="value">₹${o.total.toFixed(2)}</div></div>
-          <div class="amz-bar-col"><div class="label">SHIP TO</div><div class="value"><a href="#">${o.shipTo} <span class="arrow">▾</span></a></div></div>
+          <div class="amz-bar-col"><div class="label">ORDER ID</div><div class="value">${escapeHtml(o.id)}</div></div>
+          <div class="amz-bar-col"><div class="label">TOTAL</div><div class="value">${money(o.totalPaise)}</div></div>
+          <div class="amz-bar-col"><div class="label">CUSTOMER</div><div class="value">${escapeHtml(o.shipTo)}</div></div>
         </div>`;
-        if(o.status==="Refunded" && o.refundQuestion){
-          html += `<div class="amz-refund-info" id="refund-${o.id}">
-            <div class="refund-head">Refunded</div>
-            <div class="refund-sub">${o.statusSub}</div>
-            <div class="refund-link" onclick="toggleRefund('${o.id}')">${o.refundQuestion} <span class="arrow">▾</span></div>
-            <div class="refund-details">${o.refundAnswer}</div>
-          </div>`;
-        }
         html += `</div>`;
       });
     }
@@ -1294,6 +1278,7 @@ function showAccountSub(section){
   }
   else if(section==="addresses"){
     html += `<div class="account-sub"><h3>Saved Addresses</h3><button class="btn-dark" style="margin-bottom:14px" onclick="alert('Add address form coming soon!')">+ Add New Address</button>`;
+    if(myAddresses.length===0) html += `<div class="empty-state"><p>No saved addresses.</p></div>`;
     myAddresses.forEach(a=>{
       html += `<div class="addr-card"><div><span class="tag">${a.tag}</span><div class="text"><strong>${a.name}</strong>${a.line1}<br>${a.city}<br>📞 ${a.phone}</div></div><div style="display:flex;flex-direction:column;gap:6px"><button onclick="alert('Edit address')">Edit</button>${!a.default?`<button onclick="alert('Delete address')" style="color:#c53030">Delete</button>`:""}</div></div>`;
     });
@@ -1352,14 +1337,12 @@ function backToAccountMenu(){
 function toggleFaq(i){ document.getElementById("faq-"+i).classList.toggle("open"); }
 function toggleRefund(id){ document.getElementById("refund-"+id).classList.toggle("open"); }
 function handleLogout(){
-  if(confirm("Are you sure you want to log out?")){
-    alert("You have been logged out successfully.");
-    showHome();
-  }
+  showHome();
 }
 
 /* ========== INIT ========== */
 function init(){
+  buildAllStores();
   renderCategories(); renderStores(); renderCart();
   document.getElementById("searchInput").addEventListener("input",handleNavSearch);
   document.getElementById("viewSearch").addEventListener("input",handleViewSearch);
@@ -1367,8 +1350,20 @@ function init(){
   document.getElementById("modalClose").addEventListener("click",closeModal);
   document.getElementById("modal").addEventListener("click",e=>{ if(e.target.id==="modal") closeModal(); });
   document.getElementById("navCartBtn").addEventListener("click",()=>document.getElementById("cartPanel").scrollIntoView({behavior:"smooth"}));
+
+  if (!apiDataLoaded) {
+    const message=apiLoadError
+      ? `Could not load live stores and products: ${escapeHtml(apiLoadError)}`
+      : "Could not load live stores and products. Check that the backend is running and its database is configured.";
+    document.getElementById("storeRow").innerHTML = `<p style="padding:20px;color:#c53030;font-weight:600">${message}</p>`;
+    document.getElementById("shopSections").innerHTML = `<p class="cart-empty">${message}</p>`;
+  } else if(stores.length===0||products.length===0) {
+    document.getElementById("storeRow").innerHTML = "<p style='padding:20px'>No sellers are currently available.</p>";
+    document.getElementById("shopSections").innerHTML = "<p class='cart-empty'>No products are currently available.</p>";
+  }
 }
-init();
+
+loadFromAPI().catch(error=>console.error("Dashboard is in unavailable state:",error.message)).finally(init);
 </script>
 </body>
 </html>

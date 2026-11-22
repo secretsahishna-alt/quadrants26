@@ -119,8 +119,8 @@ body{background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-d
 <nav class="navbar">
   <div class="nav-logo"><img src="logo.png" alt="Kornerwala Logo" style="height: 35px;"></div>
   <div class="nav-user">
-    <span>Welcome, <strong id="navShopName">Shopkeeper</strong></span>
-    <button class="logout-btn" onclick="location.href='login.html'">Logout</button>
+    <span>Seller dashboard preview</span>
+    <button class="logout-btn" onclick="location.href='dashboard.html'">Back to Storefront</button>
   </div>
 </nav>
 
@@ -130,13 +130,13 @@ body{background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-d
   <aside class="card profile-card">
     <div class="profile-header">
       <div class="shop-avatar">🏪</div>
-      <div class="shop-name" id="profileName">Your Shop Name</div>
-      <div class="shop-status">Active & Receiving Orders</div>
+      <div class="shop-name" id="profileName">Seller profile not configured</div>
+      <div class="shop-status">Not connected to seller API</div>
     </div>
     <div class="profile-details">
-      <div class="detail-item"><label>Address</label><p id="profileAddress">Shop address will appear here</p></div>
-      <div class="detail-item"><label>Contact</label><p id="profileContact">+91 00000 00000</p></div>
-      <div class="detail-item"><label>Shop ID</label><p>#KW-8842</p></div>
+      <div class="detail-item"><label>Address</label><p id="profileAddress">Not configured</p></div>
+      <div class="detail-item"><label>Contact</label><p id="profileContact">Not configured</p></div>
+      <div class="detail-item"><label>Shop ID</label><p>Not linked</p></div>
     </div>
     <button class="edit-profile-btn" onclick="document.getElementById('setupModal').style.display='flex'">Edit Profile</button>
   </aside>
@@ -154,17 +154,17 @@ body{background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-d
 
       <!-- Product Details Form -->
       <div class="form-area">
-        <div class="form-group"><label>Brand (Auto-detected)</label><input type="text" id="aiBrand" placeholder="Scan barcode to auto-fill"></div>
-        <div class="form-group"><label>Item Name (Auto-detected)</label><input type="text" id="aiName" placeholder="Scan barcode to auto-fill"></div>
-        <div class="form-group"><label>MRP (Auto-detected)</label><input type="text" id="aiMrp" placeholder="Scan barcode to auto-fill"></div>
-        <div class="form-group"><label>Net Quantity in Store</label><input type="number" id="itemQty" placeholder="Enter available stock" min="0"></div>
-        <button class="add-btn" id="addBtn" onclick="addItem()">Add to Inventory</button>
+        <div class="form-group"><label>Brand (local draft)</label><input type="text" id="aiBrand" placeholder="Enter brand"></div>
+        <div class="form-group"><label>Item Name (local draft)</label><input type="text" id="aiName" placeholder="Enter item name"></div>
+        <div class="form-group"><label>Price (local draft)</label><input type="text" id="aiMrp" placeholder="Enter price"></div>
+        <div class="form-group"><label>Draft stock quantity</label><input type="number" id="itemQty" placeholder="Enter quantity" min="0"></div>
+        <button class="add-btn" id="addBtn" onclick="addItem()">Add Local Draft</button>
       </div>
     </div>
 
     <!-- Inventory List -->
     <div class="card">
-      <div class="card-header">Current Inventory <span class="badge" id="itemCount">0 Items</span></div>
+      <div class="card-header">Inventory draft (not saved) <span class="badge" id="itemCount">0 Items</span></div>
       <div class="inventory-list" id="inventoryList">
         <div style="text-align:center;padding:30px;color:var(--text-muted);font-size:14px">No items added yet. Scan a barcode above!</div>
       </div>
@@ -173,7 +173,7 @@ body{background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-d
 
   <!-- RIGHT: ORDERS -->
   <aside class="card">
-    <div class="card-header">Live Orders <span class="badge">3 New</span></div>
+    <div class="card-header">Orders (not connected)</div>
     <div class="orders-list" id="ordersList"></div>
   </aside>
 
@@ -183,7 +183,7 @@ body{background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-d
 <div id="setupModal" style="position:fixed;inset:0;background:rgba(0,0,0,.4);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;z-index:100">
   <div style="background:var(--card);border-radius:20px;padding:40px;width:100%;max-width:480px;box-shadow:0 20px 50px rgba(0,0,0,.15)">
     <h2 style="font-size:24px;font-weight:800;margin-bottom:8px">Set up your shop</h2>
-    <p style="color:var(--text-muted);font-size:14px;margin-bottom:24px">Enter your shop details to start receiving orders.</p>
+    <p style="color:var(--text-muted);font-size:14px;margin-bottom:24px">Seller profile changes are only a local preview; no seller API is connected.</p>
     <form id="setupForm">
       <div style="margin-bottom:16px;display:flex;flex-direction:column;gap:6px">
         <label style="font-size:12px;font-weight:600;color:var(--text-muted)">Shop Name</label>
@@ -197,7 +197,7 @@ body{background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-d
         <label style="font-size:12px;font-weight:600;color:var(--text-muted)">Contact Number</label>
         <input type="tel" id="setupContact" placeholder="eg. 9876543210" required style="padding:12px 14px;background:var(--bg);border:1px solid var(--border);border-radius:8px;font-size:14px;outline:none">
       </div>
-      <button type="submit" style="width:100%;padding:14px;background:var(--blinkit);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer">Open Dashboard</button>
+      <button type="submit" style="width:100%;padding:14px;background:var(--blinkit);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer">Preview Locally</button>
     </form>
   </div>
 </div>
@@ -212,11 +212,10 @@ document.getElementById('setupForm').addEventListener('submit', (e) => {
   const address = document.getElementById('setupAddress').value;
   const contact = document.getElementById('setupContact').value;
 
-  // Update Dashboard Profile
+  // Preview changes locally; no seller profile API is wired up.
   document.getElementById('profileName').textContent = name;
-  document.getElementById('navShopName').textContent = name;
   document.getElementById('profileAddress').textContent = address;
-  document.getElementById('profileContact').textContent = '+91 ' + contact;
+  document.getElementById('profileContact').textContent = contact;
 
   // Hide Modal
   document.getElementById('setupModal').style.display = 'none';
@@ -225,14 +224,6 @@ document.getElementById('setupForm').addEventListener('submit', (e) => {
 // --- 2. BARCODE SCANNER LOGIC ---
 let html5QrcodeScanner = null;
 let isScanning = false;
-
-const mockProductDatabase = {
-  "8901030895467": { brand: "Tata", name: "Premium Chai 500g", mrp: "₹265" },
-  "8901725181234": { brand: "Parle", name: "Parle-G Biscuits", mrp: "₹10" },
-  "8906001234567": { brand: "Amul", name: "Taaza Toned Milk", mrp: "₹27" },
-  "4006381333931": { brand: "Oral-B", name: "Pro Expert Toothpaste", mrp: "₹199" },
-  "8901491107056": { brand: "Maggi", name: "2-Minute Noodles Masala", mrp: "₹14" }
-};
 
 document.getElementById('start-scan-btn').addEventListener('click', () => {
   const statusText = document.getElementById('scan-status');
@@ -283,23 +274,8 @@ function onScanSuccess(decodedText, decodedResult) {
   }).catch(err => console.error(err));
 
   const statusText = document.getElementById('scan-status');
-  statusText.textContent = `Scanned: ${decodedText}. Looking up...`;
-
-  const product = mockProductDatabase[decodedText];
-
-  if (product) {
-    document.getElementById('aiBrand').value = product.brand;
-    document.getElementById('aiName').value = product.name;
-    document.getElementById('aiMrp').value = product.mrp;
-    document.getElementById('itemQty').focus();
-    statusText.textContent = `✅ Found: ${product.name}`;
-  } else {
-    statusText.textContent = `⚠️ Not in DB. Enter details manually.`;
-    document.getElementById('aiBrand').value = "Unknown";
-    document.getElementById('aiName').value = "";
-    document.getElementById('aiMrp').value = "";
-    document.getElementById('aiName').focus();
-  }
+  statusText.textContent = `Scanned ${decodedText}; no product lookup API is connected. Verify details manually.`;
+  document.getElementById('aiName').focus();
 }
 
 function onScanFailure(error) { }
@@ -346,41 +322,9 @@ function renderInventory() {
 }
 
 // --- 4. ORDERS MANAGEMENT ---
-const mockOrders = [
-  {id: '#ORD-8921', time: '2 mins ago', customer: 'Rahul Sharma', phone: '98765 43210', items: [{name: 'Airdopes 141', qty: 1}, {name: 'USB-C Cable', qty: 2}], total: '₹1,498'},
-  {id: '#ORD-8920', time: '14 mins ago', customer: 'Priya Patel', phone: '99887 76655', items: [{name: 'Notebook (A4)', qty: 3}, {name: 'Blue Pen', qty: 5}], total: '₹345'},
-  {id: '#ORD-8919', time: '1 hour ago', customer: 'Amit Kumar', phone: '91234 56789', items: [{name: 'Cotton T-Shirt', qty: 1}], total: '₹499'}
-];
-
 function renderOrders() {
   const list = document.getElementById('ordersList');
-  list.innerHTML = mockOrders.map((order, index) => `
-    <div class="order-card" id="order-${index}">
-      <div class="order-header">
-        <span class="order-id">${order.id}</span>
-        <span class="order-time">${order.time}</span>
-      </div>
-      <div class="customer-info">
-        <div class="cust-avatar">${order.customer.charAt(0)}</div>
-        <div class="cust-details">
-          <span class="cust-name">${order.customer}</span>
-          <span class="cust-phone">📞 ${order.phone}</span>
-        </div>
-      </div>
-      <div class="order-items">
-        ${order.items.map((item, i) => `
-          <label class="order-item" onclick="toggleItem(this)">
-            <input type="checkbox" onchange="checkOrderStatus(${index})">
-            <span class="item-text">${item.qty}x ${item.name}</span>
-          </label>
-        `).join('')}
-      </div>
-      <button class="ready-btn" id="readyBtn-${index}" disabled onclick="markReady(${index})">Pack items to enable</button>
-      <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);display:flex;justify-content:space-between;font-weight:800;font-size:14px">
-        <span>Order Total</span><span>${order.total}</span>
-      </div>
-    </div>
-  `).join('');
+  list.innerHTML = '<p style="padding:20px;color:var(--text-muted)">No seller orders are available. The seller-orders API is not connected.</p>';
 }
 
 function toggleItem(label) {

@@ -11,18 +11,15 @@ dotenv.config({
 // Read the Aiven connection URL
 const OPENSEARCH_URL = process.env.OPENSEARCH_URL;
 
-// Make sure the connection URL exists
-if (!OPENSEARCH_URL) {
-    throw new Error("OPENSEARCH_URL is missing from backend/.env");
-}
-
-// Create the OpenSearch client
-const client = new Client({
-    node: OPENSEARCH_URL
-});
+const client = OPENSEARCH_URL
+    ? new Client({ node: OPENSEARCH_URL })
+    : null;
 
 // Function to test the connection
 async function checkOpenSearchConnection() {
+    if (!client) {
+        throw new Error("OPENSEARCH_URL is missing from backend/.env");
+    }
     const response = await client.info();
     return response.body ?? response;
 }

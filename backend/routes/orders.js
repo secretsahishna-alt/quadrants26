@@ -4,6 +4,7 @@ const router = express.Router();
 
 const pool = require("../db/postgres");
 const { producer } = require("../services/kafka");
+const MAX_ORDER_TOTAL_PAISE = 2147483647;
 async function getDatabaseClient() {
     return await pool.connect();
 }
@@ -21,8 +22,10 @@ router.post("/", async (req, res) => {
     if (
         typeof customerName !== "string" ||
         !customerName.trim() ||
+        customerName.trim().length > 100 ||
         typeof customerPhone !== "string" ||
         !customerPhone.trim() ||
+        customerPhone.trim().length > 20 ||
         !["pickup", "delivery"].includes(fulfillmentType) ||
         !Array.isArray(items) ||
         items.length === 0
@@ -62,6 +65,10 @@ router.post("/", async (req, res) => {
 
     let client;
     let orderCommitted = false;
+    let orderId;
+    let totalPaise = 0;
+    let createdAt;
+    let createdSellerOrders = [];
 
     try {
         client = await getDatabaseClient();
@@ -79,7 +86,6 @@ router.post("/", async (req, res) => {
             [productIds]
         );
 
-        console.log("Products retrieved:", productResult.rows);
         if (productResult.rows.length !== productIds.length) {
             await client.query("ROLLBACK");
 
@@ -115,9 +121,6 @@ router.post("/", async (req, res) => {
             }
         }
 
-        console.log("Inventory validation passed");
-        let totalPaise = 0;
-
         for (const [productId, quantity] of requestedQuantities) {
             const product = productMap.get(productId);
 
@@ -125,7 +128,8 @@ router.post("/", async (req, res) => {
 
             if (
                 !Number.isSafeInteger(subtotal) ||
-                !Number.isSafeInteger(totalPaise + subtotal)
+                !Number.isSafeInteger(totalPaise + subtotal) ||
+                totalPaise + subtotal > MAX_ORDER_TOTAL_PAISE
             ) {
                 await client.query("ROLLBACK");
 
@@ -138,7 +142,6 @@ router.post("/", async (req, res) => {
             totalPaise += subtotal;
         }
 
-        console.log("Order total in paise:", totalPaise);
         const orderResult = await client.query(
             `INSERT INTO orders (
         customer_name,
@@ -148,7 +151,7 @@ router.post("/", async (req, res) => {
         total_paise
     )
     VALUES ($1, $2, $3, $4, $5)
-    RETURNING id`,
+    RETURNING id, created_at`,
             [
                 customerName.trim(),
                 customerPhone.trim(),
@@ -160,9 +163,9 @@ router.post("/", async (req, res) => {
             ]
         );
 
-        const orderId = orderResult.rows[0].id;
+        orderId = orderResult.rows[0].id;
+        createdAt = orderResult.rows[0].created_at;
 
-        console.log("Created parent order:", orderId);
         const sellerGroups = new Map();
 
         for (const [productId, quantity] of requestedQuantities) {
@@ -189,9 +192,6 @@ router.post("/", async (req, res) => {
             });
         }
 
-        console.log("Seller groups:", [...sellerGroups.entries()]);
-        const createdSellerOrders = [];
-
         for (const [sellerId, group] of sellerGroups) {
             const sellerOrderResult = await client.query(
                 `INSERT INTO seller_orders (
@@ -217,7 +217,6 @@ router.post("/", async (req, res) => {
             });
         }
 
-        console.log("Created seller orders:", createdSellerOrders);
         for (const sellerOrder of createdSellerOrders) {
             const group = sellerGroups.get(sellerOrder.sellerId);
 
@@ -240,7 +239,6 @@ router.post("/", async (req, res) => {
             }
         }
 
-        console.log("All order items created successfully");
         for (const [productId, quantity] of requestedQuantities) {
             const updateResult = await client.query(
                 `UPDATE products
@@ -257,58 +255,41 @@ router.post("/", async (req, res) => {
             }
         }
 
-        console.log("Inventory updated successfully");
-        console.log("Inventory updated successfully");
-
-        // Permanently save the order and inventory changes
-
         await client.query("COMMIT");
         orderCommitted = true;
 
-        let eventPublished = false;
-
-        try {
-            const orderEvent = {
-                eventId: `order-${orderId}-${Date.now()}`,
-                eventType: "order.created",
-                data: {
-                    orderId,
-                    customer: {
-                        name: customerName
-                    },
-                    totalPaise,
-                    sellerOrders: createdSellerOrders
-                }
-            };
-
-
-            await producer.send({
+        const orderEvent = {
+            eventId: `order-${orderId}-${Date.now()}`,
+            eventType: "order.created",
+            data: {
+                orderId,
+                customer: { name: customerName },
+                totalPaise,
+                sellerOrders: createdSellerOrders
+            }
+        };
+        Promise.resolve()
+            .then(() => producer.send({
                 topic: process.env.KAFKA_TOPIC || "orders.created",
-                messages: [
-                    {
-                        key: String(orderId),
-                        value: JSON.stringify(orderEvent)
-                    }
-                ]
+                messages: [{
+                    key: String(orderId),
+                    value: JSON.stringify(orderEvent)
+                }]
+            }))
+            .then(() => console.log("Order event published to Kafka:", orderId))
+            .catch((kafkaError) => {
+                console.error("Order saved, but Kafka publishing failed:", kafkaError.message);
             });
-
-            eventPublished = true;
-            console.log("Order event published to Kafka:", orderId);
-
-        } catch (kafkaError) {
-            console.error(
-                "Order saved, but Kafka publishing failed:",
-                kafkaError.message
-            );
-        }
 
         return res.status(201).json({
             success: true,
             message: "Order placed successfully",
             orderId,
+            createdAt,
             totalPaise,
             sellerOrders: createdSellerOrders,
-            eventPublished
+            eventPublished: false,
+            eventStatus: "pending"
         });
 
     } catch (error) {
@@ -324,6 +305,7 @@ router.post("/", async (req, res) => {
                 success: true,
                 message: "Order saved successfully",
                 orderId,
+                createdAt,
                 totalPaise,
                 sellerOrders: createdSellerOrders,
                 eventPublished: false
