@@ -268,18 +268,31 @@ router.post("/", async (req, res) => {
                 sellerOrders: createdSellerOrders
             }
         };
-        Promise.resolve()
-            .then(() => producer.send({
-                topic: process.env.KAFKA_TOPIC || "orders.created",
-                messages: [{
-                    key: String(orderId),
-                    value: JSON.stringify(orderEvent)
-                }]
-            }))
-            .then(() => console.log("Order event published to Kafka:", orderId))
+        const publishEvent = Promise.resolve()
+            .then(async () => {
+                if (process.env.VERCEL) {
+                    await producer.connect();
+                }
+                return producer.send({
+                    topic: process.env.KAFKA_TOPIC || "orders.created",
+                    messages: [{
+                        key: String(orderId),
+                        value: JSON.stringify(orderEvent)
+                    }]
+                });
+            })
+            .then(() => {
+                console.log("Order event published to Kafka:", orderId);
+                return "published";
+            })
             .catch((kafkaError) => {
                 console.error("Order saved, but Kafka publishing failed:", kafkaError.message);
+                return "failed";
             });
+        let eventStatus = "pending";
+        if (process.env.VERCEL) {
+            eventStatus = await publishEvent;
+        }
 
         return res.status(201).json({
             success: true,
@@ -288,8 +301,8 @@ router.post("/", async (req, res) => {
             createdAt,
             totalPaise,
             sellerOrders: createdSellerOrders,
-            eventPublished: false,
-            eventStatus: "pending"
+            eventPublished: eventStatus === "published",
+            eventStatus
         });
 
     } catch (error) {

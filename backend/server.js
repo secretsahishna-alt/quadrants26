@@ -86,28 +86,32 @@ app.use("/api/orders", orderRoutes);
 app.use("/api/search", require("./routes/search"));
 const PORT = Number(process.env.PORT) || 5003;
 
-const server = app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-    if (kafkaError) {
-        console.warn(`Kafka is unavailable; orders can still be saved: ${kafkaError.message}`);
-        return;
-    }
+module.exports = app;
 
-    producer.connect()
-        .then(() => console.log("Kafka producer connected successfully"))
-        .catch((error) => console.error("Kafka connection failed; orders can still be saved:", error.message));
-});
+if (!process.env.VERCEL) {
+    const server = app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+        if (kafkaError) {
+            console.warn(`Kafka is unavailable; orders can still be saved: ${kafkaError.message}`);
+            return;
+        }
 
-server.on("error", (error) => {
-    console.error("Backend server failed to start:", error.message);
-    process.exitCode = 1;
-});
-
-process.on("SIGTERM", () => {
-    server.close(async () => {
-        await producer.disconnect().catch((error) => {
-            console.error("Kafka disconnect failed:", error.message);
-        });
-        await pool.end();
+        producer.connect()
+            .then(() => console.log("Kafka producer connected successfully"))
+            .catch((error) => console.error("Kafka connection failed; orders can still be saved:", error.message));
     });
-});
+
+    server.on("error", (error) => {
+        console.error("Backend server failed to start:", error.message);
+        process.exitCode = 1;
+    });
+
+    process.on("SIGTERM", () => {
+        server.close(async () => {
+            await producer.disconnect().catch((error) => {
+                console.error("Kafka disconnect failed:", error.message);
+            });
+            await pool.end();
+        });
+    });
+}

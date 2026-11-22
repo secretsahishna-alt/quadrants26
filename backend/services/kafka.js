@@ -6,19 +6,22 @@ require("dotenv").config({ path: path.join(__dirname, "../.env") });
 
 const requiredConfig = [
     "KAFKA_BROKER",
-    "KAFKA_CA_PATH",
     "KAFKA_MECHANISM",
     "KAFKA_USERNAME",
     "KAFKA_PASSWORD",
 ];
 const missingConfig = requiredConfig.filter((key) => !process.env[key]);
+if (!process.env.KAFKA_CA && !process.env.KAFKA_CA_PATH) {
+    missingConfig.push("KAFKA_CA or KAFKA_CA_PATH");
+}
 let kafka = null;
 let kafkaError = null;
 
 if (missingConfig.length === 0) {
     try {
-        const caPath = path.resolve(__dirname, "../", process.env.KAFKA_CA_PATH);
-        const ca = fs.readFileSync(caPath, "utf8");
+        const ca = process.env.KAFKA_CA
+            ? process.env.KAFKA_CA.replace(/\\n/g, "\n")
+            : fs.readFileSync(path.resolve(__dirname, "../", process.env.KAFKA_CA_PATH), "utf8");
         kafka = new Kafka({
             clientId: "quadrants26-backend",
             brokers: [process.env.KAFKA_BROKER],

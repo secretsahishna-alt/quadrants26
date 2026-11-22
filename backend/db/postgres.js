@@ -6,7 +6,10 @@ const { Pool } = require("pg");
 
 const caPath = process.env.PGSSL_CA_PATH || process.env.KAFKA_CA_PATH;
 const ssl = { rejectUnauthorized: true };
-if (caPath) {
+const ca = process.env.PGSSL_CA || process.env.KAFKA_CA;
+if (ca) {
+    ssl.ca = ca.replace(/\\n/g, "\n");
+} else if (caPath) {
     ssl.ca = fs.readFileSync(path.resolve(__dirname, "..", caPath), "utf8");
 }
 
